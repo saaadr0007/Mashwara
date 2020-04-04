@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "807392621081",
+    "firebase_url": "https://moviebook-6c36b.firebaseio.com",
+    "project_id": "moviebook-6c36b",
+    "storage_bucket": "moviebook-6c36b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807392621081:android:591fa169f5c5c6e1437088",
+        "android_client_info": {
+          "package_name": "com.sadma.example.nearbyservices"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "807392621081-sp1drvr8apuvfqqfpqll2fqlkc8c0pb4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyGZ9ugg1531UHaP4Gx-uvBZgJEq119hc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "807392621081-sp1drvr8apuvfqqfpqll2fqlkc8c0pb4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

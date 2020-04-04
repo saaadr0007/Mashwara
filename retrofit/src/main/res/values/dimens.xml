@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="head_padding">20dp</dimen>
+    <dimen name="ten">10dp</dimen>
+    <dimen name="fifteen">15dp</dimen>
+    <dimen name="two_fifty">250dp</dimen>
+    <dimen name="thirty">30dp</dimen>
+    <dimen name="fifty">50dp</dimen>
+    <dimen name="six">6dp</dimen>
+    <dimen name="five">5dp</dimen>
+    <dimen name="twenty">20dp</dimen>
+    <dimen name="fourty">40dp</dimen>
+    <dimen name="hundred">100dp</dimen>
+    <dimen name="textSize_thirty">30sp</dimen>
+    <dimen name="padding_ten">10dp </dimen>
+    <dimen name="padding_six">6dp</dimen>
+    <dimen name="padding_twenty">20dp</dimen>
+    <dimen name="radius">15dp</dimen>
+</resources>

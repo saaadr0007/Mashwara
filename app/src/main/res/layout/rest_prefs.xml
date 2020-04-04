@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_margin="5dp"
+
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/junk"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:background="@drawable/rect"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:onClick="getjunk"
+        android:padding="2dp"
+        android:text="Junk"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/desi"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/italian"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rect"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:onClick="getitalian"
+        android:padding="2dp"
+        android:text="Italian"
+        android:textSize="15dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/cont"
+
+
+        app:layout_constraintTop_toBottomOf="@id/junk" />
+
+    <TextView
+        android:id="@+id/desi"
+
+        android:layout_width="105dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/rect"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:onClick="getChinese"
+        android:padding="2dp"
+        android:text="Chinese"
+        android:textSize="15dp"
+        app:layout_constraintLeft_toRightOf="@+id/junk"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+    android:id="@+id/Chinese"
+    android:layout_width="100dp"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+    android:background="@drawable/rect"
+
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center"
+    android:onClick="getdesi"
+    android:padding="2dp"
+    android:text="Desi"
+    android:textSize="15dp"
+    app:layout_constraintBottom_toBottomOf="@+id/desi"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.019"
+
+    app:layout_constraintLeft_toRightOf="@+id/desi"
+        app:layout_constraintStart_toEndOf="@+id/desi" />
+
+    <TextView
+        android:id="@+id/cont"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="55dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rect"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:onClick="getContinental"
+        android:padding="2dp"
+        android:text="Continental"
+        android:textSize="15dp"
+
+        app:layout_constraintEnd_toEndOf="@+id/desi"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/junk" />
+
+    <TextView
+        android:id="@+id/mexi"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rect"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:onClick="getMexican"
+        android:padding="2dp"
+        android:text="Mexican"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="@+id/Chinese"
+        app:layout_constraintStart_toEndOf="@id/cont"
+        app:layout_constraintTop_toBottomOf="@id/Chinese" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Interior Reflections</string>
+    <string name="feeds_nav">Feeds</string>
+    <string name="liked_items_nav">Liked Items</string>
+    <string name="my_orders_nav">My Orders</string>
+    <string name="settings_nav">Settings</string>
+    <string name="IR_app_name">Interior Reflections</string>
+    <string name="username">Username</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="password_enter">Password</string>
+    <string name="register"><u>Register now!</u></string>
+    <string name="add_product">Add Product</string>
+    <string name="des_add_prod">Description:</string>
+    <string name="price_add_prod">Price:</string>
+    <string name="category_add_prod">Category:</string>
+    <string name="add_but">Add</string>
+    <string name="user_info">Ibraheem Ahmed\nheem42@gmail.com</string>
+    <string name="name_sample">Name</string>
+    <string name="view_but">View</string>
+    <string name="furniture_feedrv">Furniture</string>
+    <string name="log_out_button">Log Out</string>
+    <string name="exit_settings_but">Exit</string>
+    <string name="buy_button">Buy</string>
+    <string name="sample_text1">byeeeeeeee</string>
+    <string name="sample_text2">hellloooo</string>
+    <string name="last_name_text">Last Name:</string>
+    <string name="first_name_text_signup">First Name:</string>
+    <string name="email_address_signup">Email Address:</string>
+    <string name="password_signup">Password:</string>
+    <string name="retype_password_signup">Retype Password:</string>
+    <string name="address_signup">Address:</string>
+    <string name="update_txt">Update</string>
+    <string name="existing_acc_login">Don\'t have an existing account?</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+</resources>
