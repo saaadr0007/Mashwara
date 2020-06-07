@@ -19,14 +19,14 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways"
-            android:background="@color/accent_indago"
+            android:background="@color/accent_grey"
             app:titleTextColor="@android:color/white"/>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/accent_purple"
+            android:background="@color/accent_indago"
             app:tabIndicatorColor="@android:color/white"
             app:tabMode="fixed"
             app:tabPaddingEnd="32dp"

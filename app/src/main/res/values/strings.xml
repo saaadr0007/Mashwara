@@ -123,7 +123,7 @@
     <string name="share">Share</string>
     <string name="signin">Sign In</string>
     <string name="donotaccount">Don\'t Have an account?  Register</string>
-    <string name="signup">Signup Account</string>
+    <string name="signup">Create Your Mashwara Account</string>
     <string name="place">Place_holder</string>
     <string name="update">Update</string>
     <string name="facebook_app_id">793112054478374</string>
@@ -143,6 +143,7 @@
     <string name="website_not_registered_string">Website not Registered</string>
     <string name="phone_number_not_registered_string">Phone Number not Registered</string>
     <string name="favourite_place_list_string">Favourite Place List</string>
+    <string name="preference_place_list_string">Preferences</string>
     <string name="share_link_string">Share Link</string>
     <string name="turn_on_gps_message">Please Turn on GPS</string>
     <string name="launcher_icon">Launcher Icon</string>
@@ -165,7 +166,7 @@
     <string name="search_name">Search</string>
     <string name="rem_me">Forgot Password?</string>
     <string name="personalize_your_experience">Personalize Your Experience</string>
-    <string name="add_preferences">Add Preferences</string>
+    <string name="add_preferences">Edit Preferences</string>
     <string name="help_us_give_you_better_recommendations">Help us give you Better Recommendations</string>
     <string name="set_preferences">Set Preferences</string>
     <string name="please_update_preferences"> RELAX \n Help us ,Know you More \n Set Preferences For Great Mashwaraas
@@ -179,5 +180,5 @@
     <string name="errormsg">Failure</string>
     <string name="retype_pass">ReType Pass</string>
     <string name="terms_conditions">Agree to Terms and Conditions</string>
-    <string name="already_account">Already a Member?</string>
+    <string name="already_account">Already a Member?Sign in</string>
 </resources>

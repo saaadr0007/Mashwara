@@ -1,102 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    tools:context=".ui.LoginActivity">-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/image1"-->
+<!--        android:layout_width="97dp"-->
+<!--        android:layout_height="79dp"-->
+<!--        android:layout_marginTop="165dp"-->
+<!--        android:src="@mipmap/suitcase"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/emaileditText"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:ems="10"-->
+<!--        android:gravity="center"-->
+<!--        android:hint="@string/email"-->
+<!--        android:inputType="textPersonName"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/image1"-->
+<!--        app:layout_constraintStart_toStartOf="@id/image1"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/image1" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/passeditText"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="17dp"-->
+<!--        android:ems="10"-->
+<!--        android:gravity="center"-->
+<!--        android:hint="@string/pass"-->
+<!--        android:inputType="textPassword"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/emaileditText"-->
+<!--        app:layout_constraintStart_toStartOf="@id/emaileditText"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/emaileditText" />-->
+
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/checkBox"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="4dp"-->
+<!--        android:text="@string/rem_me"-->
+<!--        android:textColor="@color/accent_blue"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/passeditText"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/passeditText" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/button"-->
+<!--        android:layout_width="109dp"-->
+<!--        android:layout_height="44dp"-->
+<!--        android:layout_marginTop="12dp"-->
+<!--        android:background="@drawable/circle"-->
+<!--        android:text="@string/signin"-->
+<!--        android:textColor="@color/color_icons"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/passeditText"-->
+<!--        app:layout_constraintStart_toStartOf="@id/passeditText"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/checkBox" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/login_button"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="center_horizontal"-->
+<!--        android:layout_marginTop="12dp"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/button"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/button"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/button" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/textView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="12dp"-->
+<!--        android:textColor="@color/accent_blue"-->
+<!--        android:text="@string/donotaccount"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/fb"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/fb"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/fb" />-->
+
+<!--    <com.facebook.login.widget.LoginButton-->
+<!--        android:id="@+id/fb"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="6dp"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/button"-->
+
+<!--        app:layout_constraintStart_toStartOf="@id/button"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/button"/>-->
+
+
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@color/light_prple"
+
+
+    android:orientation="vertical"
     tools:context=".ui.LoginActivity">
 
-    <ImageView
-        android:id="@+id/image1"
-        android:layout_width="97dp"
-        android:layout_height="79dp"
-        android:layout_marginTop="165dp"
-        android:src="@mipmap/suitcase"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/emaileditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
+    <LinearLayout
+        android:layout_width="85dp"
+        android:background="@mipmap/suitcase"
+        android:layout_marginBottom="4dp"
+        android:layout_height="79dp">
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/arc"
         android:gravity="center"
-        android:hint="@string/email"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@id/image1"
-        app:layout_constraintStart_toStartOf="@id/image1"
-        app:layout_constraintTop_toBottomOf="@id/image1" />
-
-    <EditText
-        android:id="@+id/passeditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="@string/pass"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@id/emaileditText"
-        app:layout_constraintStart_toStartOf="@id/emaileditText"
-        app:layout_constraintTop_toBottomOf="@id/emaileditText" />
+        android:layout_height="wrap_content">
 
 
 
-    <TextView
-        android:id="@+id/checkBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="@string/rem_me"
-        android:textColor="@color/accent_blue"
-        app:layout_constraintEnd_toEndOf="@id/passeditText"
-        app:layout_constraintTop_toBottomOf="@id/passeditText" />
+        <EditText
+            android:id="@+id/emaileditText"
+            android:hint="@string/email"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:ems="10"
+            android:textColorHint="@color/white"
+            android:inputType="textPersonName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <EditText
+            android:id="@+id/passeditText"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:ems="10"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="Password"
+            android:textColorHint="@color/white"
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="109dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/circle"
-        android:text="@string/signin"
-        android:textColor="@color/color_icons"
-        app:layout_constraintEnd_toEndOf="@id/passeditText"
-        app:layout_constraintStart_toStartOf="@id/passeditText"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+            />
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:text="LOGIN"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/button"/>
 
-    <Button
-        android:id="@+id/login_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="12dp"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="@+id/button"
-        app:layout_constraintStart_toStartOf="@+id/button" />
+<!--        <Button-->
+<!--            android:id="@+id/register"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:text="Register"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:background="@drawable/button"/>-->
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:textColor="@color/accent_blue"
-        android:text="@string/donotaccount"
-        app:layout_constraintEnd_toEndOf="@+id/fb"
-        app:layout_constraintStart_toStartOf="@+id/fb"
-        app:layout_constraintTop_toBottomOf="@+id/fb" />
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/fb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            />
 
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/fb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        app:layout_constraintTop_toBottomOf="@id/button"
+        <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:text="@string/donotaccount"
+               />
+        <TextView
+            android:id="@+id/fbdata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:visibility="gone"
 
-        app:layout_constraintStart_toStartOf="@id/button"
-        app:layout_constraintEnd_toEndOf="@id/button"/>
+            android:textColor="@color/white"
+            android:text="data from FB"
+            />
+        <ImageView
+            android:id="@+id/imagefb"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_message_white"
+            android:layout_height="wrap_content" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</LinearLayout>

@@ -35,12 +35,12 @@ public class SliderAdapterExample extends SliderViewAdapter<SliderAdapterExample
         switch (position) {
             case 1:
                 Glide.with(viewHolder.itemView)
-                        .load(R.drawable.slider1)
+                        .load(R.drawable.slider2)
                         .into(viewHolder.imageViewBackground);
                 break;
             case 2:
                 Glide.with(viewHolder.itemView)
-                        .load(R.drawable.slider2)
+                        .load(R.drawable.slider5)
                         .into(viewHolder.imageViewBackground);
                 break;
             case 3:

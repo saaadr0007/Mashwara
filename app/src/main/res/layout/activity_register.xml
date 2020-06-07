@@ -2,8 +2,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/arc"
     android:layout_height="match_parent"
     tools:context=".ui.RegisterActivity">
+
 
     <ImageView
         android:id="@+id/logo"
@@ -21,15 +23,24 @@
         android:src="@mipmap/suitcase"
         />
 
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/arc"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/alreadyAccount"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/logo" />-->
+<!--    -->
+
     <TextView
         android:id="@+id/signup_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:text="@string/signup"
-        android:textColor="@color/accent_indago"
-        android:textSize="20dp"
+        android:textColor="@color/white"
         android:textStyle="bold"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@id/email"
         app:layout_constraintEnd_toEndOf="@+id/logo"
         app:layout_constraintStart_toStartOf="@+id/logo"
@@ -44,6 +55,8 @@
         android:ems="10"
         android:gravity="center"
         android:hint="@string/email"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@id/username"
         app:layout_constraintEnd_toEndOf="@+id/signup_account"
@@ -56,6 +69,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:gravity="center"
         android:hint="@string/username"
         android:inputType="textPersonName"
@@ -67,6 +82,8 @@
     <EditText
         android:id="@+id/paassword"
         android:layout_width="wrap_content"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
@@ -84,6 +101,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:gravity="center"
         android:hint="@string/retype_pass"
         android:inputType="textPassword"
@@ -99,6 +118,8 @@
         android:layout_margin="8dp"
         android:gravity="center"
         android:text="@string/terms_conditions"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         app:layout_constraintBottom_toTopOf="@id/Signup_button"
         app:layout_constraintEnd_toEndOf="@+id/Re_type_pass"
         app:layout_constraintStart_toStartOf="@+id/Re_type_pass"
@@ -110,7 +131,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/circle"
+        android:background="@drawable/button"
         android:gravity="center"
         android:text="Sign Up"
         android:textColor="@color/color_icons"
@@ -128,12 +149,12 @@
         android:layout_marginBottom="156dp"
         android:text="@string/already_account"
         android:textStyle="bold"
-        android:textColor="@color/colorPrimaryDark"
+
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/Re_type_pass"
         app:layout_constraintStart_toStartOf="@+id/Re_type_pass"
         app:layout_constraintTop_toBottomOf="@id/Signup_button"
         app:layout_constraintVertical_bias="0.576" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -47,7 +47,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             super(itemView);
             listenerRef = new WeakReference<>(listener);
             this.textViewName = (TextView) itemView.findViewById(R.id.txtView);
-            this.imgheart = (ImageView) itemView.findViewById(R.id.unheart);
+            this.imgheart = (ImageView) itemView.findViewById(R.id.unheartimg);
             //this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
             this.imageViewIcon = (ImageView) itemView.findViewById(R.id.image);
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -56,15 +56,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
                         Toast.makeText(getApplicationContext(),"clicked",Toast.LENGTH_LONG).show();
                     listenerRef.get().onPositionClicked(imgheart,getAdapterPosition());
-
-
                 }
             });
-
-//
         }
-
-
     }
 
     public CustomAdapter(ArrayList<Arraylist> data,clicklistener listener) {

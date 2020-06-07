@@ -9,6 +9,8 @@ package com.saad.example.nearbyservices.model;
         public String username;
         public String email;
         public String pass;
+        public String birthday, gender,fb_id;
+        public int age;
         public User(String Email, String Pass)
         {
             this.email=Email;
@@ -20,5 +22,15 @@ package com.saad.example.nearbyservices.model;
             this.email=email;
             this.username= username;
             this.pass=pass;
+        }
+        public User(String uid,String email,String username,String birthday,String gender,String fb_id)
+        {
+            this.id= uid;
+            this.email=email;
+            this.username= username;
+            this.birthday=birthday;
+            this.gender= gender;
+            this.fb_id=fb_id;
+
         }
 }

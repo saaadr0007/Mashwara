@@ -36,7 +36,7 @@ public class Place implements Parcelable {
     private String mPlacePhoneNumber;
     private String mPlaceWebsite;
     private String mPlaceShareLink;
-
+    //public Photo[] mPhotos={};
     /**
      * @param mPlaceId                Place Id
      * @param mPlaceLatitude          Place Latitude
@@ -109,7 +109,21 @@ public class Place implements Parcelable {
         this.mPlaceOpeningHourStatus = in.readString();
         this.mPlaceRating = in.readDouble();
         this.mPlaceAddress = in.readString();
+//        this.mPhotos = (Photo[])in.readParcelableArray(Photo.class.getClassLoader());
     }
+
+    public Place(String currentPlaceId, Double currentPlaceLatitude, Double currentPlaceLongitude, String currentPlaceName, String currentPlaceOpeningHourStatus, Double currentPlaceRating, String currentPlaceAddress, Photo[] photoarr) {
+        this.mPlaceId = currentPlaceId;
+        this.mPlaceLatitude = currentPlaceLatitude;
+        this.mPlaceLongitude = currentPlaceLongitude;
+        this.mPlaceName = currentPlaceName;
+        this.mPlaceOpeningHourStatus = currentPlaceOpeningHourStatus;
+        this.mPlaceRating = currentPlaceRating;
+        this.mPlaceAddress = currentPlaceAddress;
+        //this.mPhotos = photoarr;
+
+    }
+
 
     public String getPlaceId() {
         return mPlaceId;
@@ -151,7 +165,7 @@ public class Place implements Parcelable {
         mPlaceOpeningHourStatus = placeOpeningHourStatus;
     }
 
-    public Double getPlaceRating() {
+    public double getPlaceRating() {
         return mPlaceRating;
     }
 
@@ -208,6 +222,7 @@ public class Place implements Parcelable {
         dest.writeString(mPlaceOpeningHourStatus);
         dest.writeDouble(mPlaceRating);
         dest.writeString(mPlaceAddress);
+//        dest.writeParcelableArray(mPhotos, 0);
     }
 
 }

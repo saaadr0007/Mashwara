@@ -80,6 +80,7 @@ public class PlaceAboutDetail extends Fragment implements OnMapReadyCallback {
     public static ArrayList<String> favourite_list=new ArrayList<>();
     private ImageView mFavouriteImageIcon;
     private String getDesc=null;
+    private String getDesc1=null;
     private String userid=null;
 
 
@@ -124,6 +125,7 @@ public class PlaceAboutDetail extends Fragment implements OnMapReadyCallback {
         mCurrentPlace = getArguments().getParcelable(GoogleApiUrl.CURRENT_LOCATION_DATA_KEY);
 
         SearchforDesc(mCurrentPlace.getPlaceId());
+        //SearchforFurnDesc(mCurrentPlace.getPlaceId());
 
         rootView.findViewById(R.id.location_phone_container).setOnClickListener(
                 new View.OnClickListener() {
@@ -182,6 +184,10 @@ public class PlaceAboutDetail extends Fragment implements OnMapReadyCallback {
             mLocationWebsiteTextView.setText(mCurrentPlace.getPlaceWebsite());
             mLocationOpeningStatusTextView.setText(mCurrentPlace.getPlaceOpeningHourStatus());
             description.setText(getDesc);
+//            if (description.getText().toString().isEmpty())
+//                description.setText(getDesc);
+//            else
+//                description.setText(getDesc1);
         }
 
 
@@ -328,14 +334,30 @@ public class PlaceAboutDetail extends Fragment implements OnMapReadyCallback {
     }
 
     private void SearchforDesc(String placeId) {
-       for (int i=0;i<SplashScreenActivity.getDescripion.size();i++)
-       {
-           if(placeId.equals(SplashScreenActivity.getDescripion.get(i).getKey()))
-           {
+        for (int i=0;i<SplashScreenActivity.getDescripion.size() || i<SplashScreenActivity.getDescripionfurn.size();i++)
+        {
+            if(placeId.equals(SplashScreenActivity.getDescripion.get(i).getKey()))
+            {
                 getDesc=SplashScreenActivity.getDescripion.get(i).getDescripion();
-               break;
-           }
-       }
+                break;
+            }
+            else if(placeId.equals(SplashScreenActivity.getDescripionfurn.get(i).getKey()))
+            {
+                getDesc=SplashScreenActivity.getDescripionfurn.get(i).getDescripion();
+                break;
+            }
+        }
+    }
+
+    private void SearchforFurnDesc(String placeId) {
+        for (int i=0;i<SplashScreenActivity.getDescripionfurn.size();i++)
+        {
+            if(placeId.equals(SplashScreenActivity.getDescripionfurn.get(i).getKey()))
+            {
+                getDesc1=SplashScreenActivity.getDescripionfurn.get(i).getDescripion();
+                break;
+            }
+        }
     }
 
     @Override

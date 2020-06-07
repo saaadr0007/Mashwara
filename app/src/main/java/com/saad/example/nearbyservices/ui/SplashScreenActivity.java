@@ -17,21 +17,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
-import android.provider.SyncStateContract;
 import android.util.Base64;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.example.retrofit.Pojo;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.common.internal.Constants;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -41,6 +39,7 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 
 import com.saad.example.nearbyservices.R;
 import com.saad.example.nearbyservices.utils.GoogleApiUrl;
+import com.saad.example.nearbyservices.utils.SaveSharedPreference;
 import com.viksaa.sssplash.lib.activity.AwesomeSplash;
 import com.viksaa.sssplash.lib.cnst.Flags;
 import com.viksaa.sssplash.lib.model.ConfigSplash;
@@ -60,7 +59,7 @@ import java.util.List;
 
 
 public class SplashScreenActivity extends AwesomeSplash implements
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
+        ConnectionCallbacks, OnConnectionFailedListener,
         LocationListener, ResultCallback<LocationSettingsResult> {
 
     public static final String TAG = SplashScreenActivity.class.getSimpleName();
@@ -72,7 +71,7 @@ public class SplashScreenActivity extends AwesomeSplash implements
     private LocationRequest mCurrentLocationRequest;
     private String mCurrentLocation = "";
     public static List<Pojo> getDescripion = new ArrayList<>();
-
+    public static List<Pojo> getDescripionfurn = new ArrayList<>();
     private SharedPreferences mLocationSharedPreferences;
     public String loadJSONFromAsset(Context context) {
         String json = null;
@@ -116,24 +115,27 @@ public class SplashScreenActivity extends AwesomeSplash implements
 //       // String myJson=inputStreamToString(this.getResources().openRawResource());
 //
 //    }
+    public void readingJSONS(){
 
-    @Override
-    public void initSplash(ConfigSplash configSplash) {
-
-
-        String jsonFileContent = null;
+        String jsonFileContent,jsonFileContent1;
+        jsonFileContent = null;
+        jsonFileContent1=null;
         try {
             jsonFileContent = readFile("restaurant_description.json");
+            jsonFileContent1 = readFile("furniture_description.json");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
         JSONArray jsonArray = null;
+        JSONArray jsonArray1 = null;
         try {
             jsonArray = new JSONArray(jsonFileContent);
+            jsonArray1 = new JSONArray(jsonFileContent1);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        for (int i=0;i<jsonArray.length();i++)
+        for (int i = 0; i<jsonArray.length(); i++)
         {
             JSONObject jsonObj = null;
             try {
@@ -155,14 +157,51 @@ public class SplashScreenActivity extends AwesomeSplash implements
             }
             getDescripion.add(new Pojo(key,desc));
         }
-
+        for (int i = 0; i<jsonArray1.length(); i++)
+        {
+            JSONObject jsonObj1 = null;
+            try {
+                jsonObj1 = jsonArray1.getJSONObject(i);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            String key = null;
+            try {
+                key = jsonObj1.getString("key");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            String desc = null;
+            try {
+                desc = jsonObj1.getString("description");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            getDescripionfurn.add(new Pojo(key,desc));
+        }
         Log.d("getobjj",getDescripion.get(0).getDescripion());
+        Log.d("getobjj",getDescripionfurn.get(0).getDescripion());
 
+    }
 
-        // Kick off the request to build GoogleApiClient.
-        buildGoogleApiClient();
+    public void checkLoginStatus()
+    {
+        if(SaveSharedPreference.getUserName(this).length() == 0)
+        {
+            startActivity(new Intent(SplashScreenActivity.this,LoginActivity.class));
 
-        // Add code to print out the key hash
+        }
+        else
+        {
+            startActivity(new Intent(SplashScreenActivity.this,LandingActivity.class));
+
+        }
+    }
+
+    @Override
+    public void initSplash(ConfigSplash configSplash) {
+
+        readingJSONS();
         try {
             PackageInfo info = getPackageManager().getPackageInfo(
                     "com.sadma.example.nearbyservices",
@@ -211,26 +250,32 @@ public class SplashScreenActivity extends AwesomeSplash implements
 
 
 
+
+
     }
 
     @Override
     public void animationsFinished() {
-        new Handler().postDelayed(new Runnable() {
 
-            /**
-             * Showing Splash Screen With timer
-             * and it is used for to display company logo
-             */
+        buildGoogleApiClient();
 
-            @Override
-            public void run() {
-                //Start HomeScreenActivity
-                startActivity(new Intent(SplashScreenActivity.this,LoginActivity.class));
-
-                //Stop SplashScreenActivity
-                finish();
-            }
-        }, SPLASH_SCREEN_TIMER);
+        //startActivity(new Intent(SplashScreenActivity.this,LoginActivity.class));
+//        new Handler().postDelayed(new Runnable() {
+//
+//            /**
+//             * Showing Splash Screen With timer
+//             * and it is used for to display company logo
+//             */
+//
+//            @Override
+//            public void run() {
+//                //Start HomeScreenActivity
+//                startActivity(new Intent(SplashScreenActivity.this,LoginActivity.class));
+//
+//                //Stop SplashScreenActivity
+//                finish();
+//            }
+//        }, SPLASH_SCREEN_TIMER);
     }
 
 //    @Override
@@ -252,6 +297,10 @@ public class SplashScreenActivity extends AwesomeSplash implements
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+        if (!mGoogleApiClient.isConnecting() || !mGoogleApiClient.isConnected())
+                 mGoogleApiClient.connect();
+
+       // Log.d("buildGoogleApi",mGoogleApiClient.toString());
     }
 
     @Override
@@ -263,6 +312,8 @@ public class SplashScreenActivity extends AwesomeSplash implements
          */
 
         Log.d(TAG, "onConnected");
+        Log.d("onconnected","onConnected");
+
         mCurrentLocationRequest = LocationRequest.create();
         mCurrentLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mCurrentLocationRequest.setInterval(60000);
@@ -368,7 +419,9 @@ public class SplashScreenActivity extends AwesomeSplash implements
                     @Override
                     public void run() {
                         //Start HomeScreenActivity
-                        startActivity(new Intent(SplashScreenActivity.this,LoginActivity.class));
+                        checkLoginStatus();
+
+                        // startActivity(new Intent(SplashScreenActivity.this,LoginActivity.class));
 
                         //Stop SplashScreenActivity
                         finish();
@@ -412,13 +465,15 @@ public class SplashScreenActivity extends AwesomeSplash implements
                     // for ActivityCompat#requestPermissions for more details.
                     return;
                 }
+                Log.d("actttres","aasa");
                 LocationServices.FusedLocationApi.requestLocationUpdates(
                         mGoogleApiClient,
                         mCurrentLocationRequest,
                         this);
 
                 //Start HomeScreenActivity
-                startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
+
+              startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
 
                 //Stop SplashScreenActivity
                 finish();

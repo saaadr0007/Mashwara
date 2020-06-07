@@ -7,4 +7,5 @@ import android.widget.ImageView;
  */
 public interface clicklistener {
     void onPositionClicked(ImageView position,int pos);
+
 }

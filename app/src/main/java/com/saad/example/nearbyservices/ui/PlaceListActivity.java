@@ -47,11 +47,10 @@ public class PlaceListActivity extends AppCompatActivity {
                 "&" + GoogleApiUrl.API_KEY_TAG + "=" + GoogleApiUrl.API_KEY;
 
         Log.d(TAG, locationQueryStringUrl);
-
         Toolbar actionBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(actionBar);
-        String actionBarTitleText = getResources().getString(R.string.near_by_tag) +
-                " " + locationName + " " + getString(R.string.list_tag);
+        //String actionBarTitleText = getResources().getString(R.string.near_by_tag) +
+                String actionBarTitleText = " " + locationName + " " + getString(R.string.list_tag);
         setTitle(actionBarTitleText);
         actionBar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

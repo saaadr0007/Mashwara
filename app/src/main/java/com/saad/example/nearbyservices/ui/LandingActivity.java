@@ -1,6 +1,7 @@
 package com.saad.example.nearbyservices.ui;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -11,6 +12,7 @@ import android.app.SearchManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
@@ -48,11 +50,15 @@ import com.saad.example.nearbyservices.R;
 import com.saad.example.nearbyservices.adapter.SliderAdapterExample;
 import com.saad.example.nearbyservices.utils.GoogleApiUrl;
 import com.saad.example.nearbyservices.utils.PlaceDetailProvider;
+import com.saad.example.nearbyservices.utils.SaveSharedPreference;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
+import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class LandingActivity extends AppCompatActivity {
 private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener;
@@ -106,6 +112,25 @@ public void navigation() {
         }
       };
 }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Log Out")
+                .setMessage("Are you sure you want to Sign Out the Application?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SaveSharedPreference.clearUserName(LandingActivity.this);
+                        finishAffinity();
+                    }
+
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
 public void searchFeature() {
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) findViewById(R.id.search);
@@ -134,6 +159,7 @@ public void searchFeature() {
     // create the popup window
 
     PopupWindow popupWindow=null ;
+    private CircleImageView fab_button;
     FrameLayout layout_MainMenu;
     View popupWindowView = null;
     //PopupWindow popupWindow = null;
@@ -202,12 +228,16 @@ public void searchFeature() {
         setContentView(R.layout.activity_landing);
         mAuth = FirebaseAuth.getInstance();
         layout_MainMenu = (FrameLayout) findViewById( R.id.mainmenu);
+        fab_button=(CircleImageView) findViewById(R.id.fab);
+
 
         FirebaseUser firebaseUser=mAuth.getCurrentUser();
         uid = firebaseUser.getUid();
         Log.i("firebbbname","asada");
         Log.i("firebbbbname",uid);
         DirectToPrefs(uid);
+
+        getuserdetails(uid);
         constraintLayout=(ConstraintLayout) findViewById(R.id.background_img);
         SliderView sliderView=findViewById(R.id.imageSlider);
         sliderView.setSliderAdapter(new SliderAdapterExample(this));
@@ -215,34 +245,17 @@ public void searchFeature() {
         sliderView.setIndicatorAnimation(IndicatorAnimations.WORM);
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         textView=findViewById(R.id.timefood);
+        fab_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
 
         searchFeature();
         navigation();
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-//        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                Bundle i=intent.getExtras();
-//                int getid=i.getInt("pic");
-//                if(getid==1)
-//                {
-//                    textView.setText("BreakFast");
-//                }else if(getid==2)
-//                {
-//                    textView.setText("Lunch");
-//
-//                }else if (getid==3)
-//                {
-//                    textView.setText("Dinner");
-//
-//                }
-//            }
-//        };
-//        IntentFilter intentFilter = new IntentFilter();
-//        intentFilter.addAction("com.sadma.example.nearbyservices");
-//        registerReceiver(broadcastReceiver,intentFilter);
 
         Calendar c = Calendar.getInstance();
         int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
@@ -254,8 +267,7 @@ public void searchFeature() {
         }else if(timeOfDay >= 12 && timeOfDay < 16){
             textView.setText("Good Afternoon");
             Toast.makeText(this, "Good Afternoon", Toast.LENGTH_SHORT).show();
-            constraintLayout.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.afternoon) );
-
+            constraintLayout.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.afternoon_1) );
         }else if(timeOfDay >= 16 && timeOfDay < 21){
             textView.setText("Good Evening");
             Toast.makeText(this, "Good Evening", Toast.LENGTH_SHORT).show();
@@ -265,10 +277,40 @@ public void searchFeature() {
             textView.setText("Good Night");
             Toast.makeText(this, "Good Night", Toast.LENGTH_SHORT).show();
             constraintLayout.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.night) );
-
         }
         Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
         textView.startAnimation(shake);
+    }
+
+    private void getuserdetails(String uid) {
+        mFirebaseInstance=FirebaseDatabase.getInstance();
+        mFirebaseDatabase1 = mFirebaseInstance.getReference("Users");
+        mFirebaseDatabase1.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.hasChild("fb_id")) {
+                   String fbid= (String) snapshot.child("fb_id").getValue();
+                    Log.v("getfbbb", fbid);
+                    show_profilepic(fbid,fab_button);
+
+                }
+
+                }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void show_profilepic(String FB_ID, CircleImageView profilePictureView)
+    {
+
+        Picasso.with(getApplicationContext()) // Context
+                .load("https://graph.facebook.com/" + FB_ID + "/picture?type=large") // URL or file
+                .into(profilePictureView); // An ImageView object to show the loaded image
+        // info.setVisibility(View.VISIBLE);
     }
 
     public void getmore(View view) {

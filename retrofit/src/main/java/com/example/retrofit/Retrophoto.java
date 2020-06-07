@@ -8,6 +8,7 @@ public class Retrophoto {
     @SerializedName("place_id")
     private String place_id;
 
+
     public void RetroPhoto(String key, String place_id) {
         this.key=key;
         this.place_id=place_id;
@@ -28,5 +29,7 @@ public class Retrophoto {
     public void setPlace_id(String place_id) {
         this.place_id = place_id;
     }
+
+
 }
 

@@ -163,7 +163,6 @@ public class PlaceDetailActivity extends AppCompatActivity {
                                             currentUserRating.getDouble("rating"),
                                             currentUserRating.getString("relative_time_description"),
                                             currentUserRating.getString("text"));
-
                                     mPlaceUserRatingsArrayList.add(currentPlaceUserRating);
                                 }
                             }
@@ -178,7 +177,6 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
                             setupViewPager(mViewPager, currentPlaceDetailData,
                                     currentPlaceUserRatingDetail);
-
                             mTabLayout.setupWithViewPager(mViewPager);
                         } catch (JSONException e) {
                             e.printStackTrace();

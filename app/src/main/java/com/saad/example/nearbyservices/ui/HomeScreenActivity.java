@@ -56,7 +56,6 @@ public class HomeScreenActivity extends AppCompatActivity {
     private HomeScreenItemListAdapter mHomeScreenItemListAdapter;
     private String[] itemString;
     private DrawerLayout mDrawerLayout;
-    SharedPreferences sharedpreferences;
     SharedPreferences.Editor editor;
 
     private ActionBarDrawerToggle mToggle;
@@ -72,25 +71,18 @@ public class HomeScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
-
-        //DirectToPrefs(uid);
-
         Toolbar actionBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(actionBar);
-//        int id = sharedpreferences.getInt("flag", 0);
-//        if (id==1)
-//             onButtonShowPopupWindowClick();
-        //onButtonShowPopupWindowClick();
+        setTitle(R.string.app_name);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.draw_layout);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
 
         //set the drawerListener
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        setTitle(R.string.app_name);
-        actionBar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
 
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

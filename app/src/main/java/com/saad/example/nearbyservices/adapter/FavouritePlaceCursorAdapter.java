@@ -7,6 +7,8 @@ import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import com.google.android.material.snackbar.Snackbar;
+
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,45 +19,73 @@ import android.widget.TextView;
 
 import com.saad.example.nearbyservices.R;
 import com.saad.example.nearbyservices.data.PlaceDetailContract.PlaceDetailEntry;
+import com.saad.example.nearbyservices.model.Place;
 import com.saad.example.nearbyservices.ui.PlaceDetailActivity;
 import com.saad.example.nearbyservices.utils.CursorRecyclerViewAdapter;
 import com.saad.example.nearbyservices.utils.GoogleApiUrl;
+
+import java.util.ArrayList;
+
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 
-public class FavouritePlaceCursorAdapter extends CursorRecyclerViewAdapter {
+public class FavouritePlaceCursorAdapter extends RecyclerView.Adapter<FavouritePlaceCursorAdapter.FavouritePlaceCursorAdapterViewHolder>{
+    private ArrayList<Place> dataSet;
+    private Context mContext;
 
-    public FavouritePlaceCursorAdapter(Context context, Cursor cursor) {
-        super(context, cursor);
+    public FavouritePlaceCursorAdapter(Context mContext,ArrayList<Place> placeArrayList) {
+        dataSet=placeArrayList;
+        this.mContext=mContext;
+
     }
-
     @Override
-    public long getItemId(int position) {
-        return super.getItemId(position);
-    }
-
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new FavouritePlaceCursorAdapterViewHolder(
+    public FavouritePlaceCursorAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                return new FavouritePlaceCursorAdapterViewHolder(
                 LayoutInflater.from(mContext).inflate(R.layout.place_list_item_layout, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, Cursor cursor) {
-        ((FavouritePlaceCursorAdapterViewHolder) viewHolder).bindView(cursor);
+    public void onBindViewHolder(@NonNull FavouritePlaceCursorAdapterViewHolder holder, int pos) {
+        (holder).bindView(pos);
     }
 
     @Override
     public int getItemCount() {
-        return super.getItemCount();
+        return dataSet.size() ;
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return 0;
-    }
+//    public FavouritePlaceCursorAdapter(Context context, Cursor cursor) {
+//        //super(context, cursor);
+//    }
+//
+//        @Override
+//        public long getItemId ( int position){
+//        return super.getItemId(position);
+//    }
+//
+//        @Override
+//        public RecyclerView.ViewHolder onCreateViewHolder (ViewGroup parent,int viewType){
+//        return new FavouritePlaceCursorAdapterViewHolder(
+//                LayoutInflater.from(mContext).inflate(R.layout.place_list_item_layout, parent, false));
+//    }
+//
+//        @Override
+//        public void onBindViewHolder (RecyclerView.ViewHolder viewHolder, Cursor cursor){
+//        ((FavouritePlaceCursorAdapterViewHolder) viewHolder).bindView(cursor);
+//    }
+//
+//        @Override
+//        public int getItemCount () {
+//        return super.getItemCount();
+//    }
+//
+//        @Override
+//        public int getItemViewType ( int position){
+//        return 0;
+//    }
 
-    private class FavouritePlaceCursorAdapterViewHolder extends RecyclerView.ViewHolder
+
+    public class FavouritePlaceCursorAdapterViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
         private Cursor mCurrentDataCursor;
@@ -77,39 +107,32 @@ public class FavouritePlaceCursorAdapter extends CursorRecyclerViewAdapter {
             itemView.setOnClickListener(this);
         }
 
-        private void bindView(Cursor currentPlaceDataCursor) {
-
-            mCurrentDataCursor = currentPlaceDataCursor;
-
-            mPlaceNameTextView.setText(currentPlaceDataCursor.getString(
-                    currentPlaceDataCursor.getColumnIndex(PlaceDetailEntry.COLUMN_PLACE_NAME)));
+        private void bindView(int placePos) {
+//
+//            mCurrentDataCursor = currentPlaceDataCursor;
+//
+            mPlaceNameTextView.setText(dataSet.get(placePos).getPlaceName());
             mPlaceNameTextView.setTypeface(Typeface.createFromAsset(mContext.getAssets(),
                     "Roboto-Regular.ttf"));
 
-            mPlaceAddressTextView.setText(currentPlaceDataCursor.getString(
-                    currentPlaceDataCursor.getColumnIndex(PlaceDetailEntry.COLUMN_PLACE_ADDRESS)));
+            mPlaceAddressTextView.setText(dataSet.get(placePos).getPlaceAddress());
             mPlaceAddressTextView.setTypeface(Typeface.createFromAsset(mContext.getAssets(),
                     "Roboto-Regular.ttf"));
 
-            if (currentPlaceDataCursor.getString(currentPlaceDataCursor
-                    .getColumnIndex(PlaceDetailEntry.COLUMN_PLACE_OPENING_HOUR_STATUS)).equals("true")) {
+            if (dataSet.get(placePos).getPlaceOpeningHourStatus().equals("true")) {
                 mPlaceOpenStatusTextView.setText(R.string.open_now);
                 mPlaceOpenStatusTextView.setTypeface(Typeface.createFromAsset(mContext.getAssets(),
                         "Roboto-Regular.ttf"));
-            } else if (currentPlaceDataCursor.getString(currentPlaceDataCursor
-                    .getColumnIndex(PlaceDetailEntry.COLUMN_PLACE_OPENING_HOUR_STATUS)).equals("false")) {
+            } else if (dataSet.get(placePos).getPlaceOpeningHourStatus().equals("false")) {
                 mPlaceOpenStatusTextView.setText(R.string.closed);
                 mPlaceOpenStatusTextView.setTypeface(Typeface.createFromAsset(mContext.getAssets(),
                         "Roboto-Regular.ttf"));
             } else {
-                mPlaceOpenStatusTextView.setText(currentPlaceDataCursor.getString(currentPlaceDataCursor
-                        .getColumnIndex(PlaceDetailEntry.COLUMN_PLACE_OPENING_HOUR_STATUS)));
+                mPlaceOpenStatusTextView.setText(dataSet.get(placePos).getPlaceOpeningHourStatus());
                 mPlaceOpenStatusTextView.setTypeface(Typeface.createFromAsset(mContext.getAssets(),
                         "Roboto-Regular.ttf"));
             }
-            mPlaceRating.setRating(Float.parseFloat(String.valueOf(currentPlaceDataCursor
-                    .getDouble(currentPlaceDataCursor
-                            .getColumnIndex(PlaceDetailEntry.COLUMN_PLACE_RATING)))));
+            mPlaceRating.setRating(Float.parseFloat(String.valueOf(dataSet.get(placePos).getPlaceRating())));
 
             mLocationIcon.setColorFilter(ContextCompat.getColor(mContext, R.color.color_divider));
         }
@@ -137,3 +160,4 @@ public class FavouritePlaceCursorAdapter extends CursorRecyclerViewAdapter {
         }
     }
 }
+
