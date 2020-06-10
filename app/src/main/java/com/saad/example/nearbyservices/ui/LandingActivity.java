@@ -248,6 +248,7 @@ public void searchFeature() {
         fab_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(LandingActivity.this,usr_prof.class));
             }
         });
 

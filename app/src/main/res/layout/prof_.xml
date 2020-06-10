@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.halo.profileui.Activity_Main">
+    tools:context="com.saad.example.nearbyservices.ui.usr_prof">
 
     <RelativeLayout
         android:id="@+id/rellay1"
@@ -19,28 +18,33 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:background="@drawable/circle_border">
+         >
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_margin="9dp"
-                android:adjustViewBounds="true"
-                android:padding="3dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/man" />
+                android:id="@+id/dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="9dp"
+                android:src="@drawable/man"
+                android:layout_marginLeft="9dp"
+                android:layout_marginTop="9dp"
+                android:scaleType="centerCrop"
+                android:layout_marginEnd="9dp"
+                android:layout_marginRight="9dp"
+                android:layout_marginBottom="9dp"
+                android:padding="3dp" />
 
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/usrname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgUser"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15sp"
             android:fontFamily="sans-serif-light"
-            android:text="Joey Tribbiani"
+            android:text="Saad"
             android:textColor="@color/white"
             android:textSize="32sp" />
 
@@ -49,10 +53,10 @@
             android:id="@+id/tv_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_name"
+            android:layout_below="@+id/usrname"
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif"
-            android:text="new york, usa"
+            android:text="Lahore, Pakistan"
             android:textAllCaps="true"
             android:textColor="@color/address"
             android:textSize="14sp" />
@@ -65,98 +69,26 @@
             android:layout_marginTop="15dp"
             android:adjustViewBounds="true"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_settings" />
+        />
 
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/linlay1"
+        android:id="@+id/linlay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/rellay1"
         android:orientation="horizontal">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@color/followersBg"
-            android:gravity="center"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:text="453K"
-                    android:textColor="@color/white"
-                    android:textSize="25sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:text="followers"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textSize="13sp" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@color/followingBg"
-            android:gravity="center"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:text="873"
-                    android:textColor="@color/white"
-                    android:textSize="25sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:text="following"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textSize="13sp" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
 
     </LinearLayout>
-
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/linlay1">
+        android:layout_below="@+id/linlay">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -164,7 +96,6 @@
             android:layout_centerInParent="true"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -179,11 +110,12 @@
                     android:textColor="@color/headings"
                     android:textSize="13sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/email_profile"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="joey@sharenofood.com"
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
@@ -204,15 +136,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Phone"
+                    android:text="Age"
                     android:textColor="@color/headings"
                     android:textSize="13sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/age_profile"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="+1-202-555-0157"
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
@@ -233,17 +166,22 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Twitter"
+                    android:text="Birthday"
+
                     android:textColor="@color/headings"
                     android:textSize="13sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/birthday_profile"
+
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:text="@string/twitterUsername"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
                     android:textColor="#000000"
                     android:textSize="18sp" />
+
+
+
 
                 <View
                     android:layout_width="match_parent"
@@ -253,34 +191,54 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <Button
+                android:id="@+id/save"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:orientation="vertical">
+                android:text="Save Changes"
+                android:textColor="@color/white"
+                android:onClick="savechanges"
+                android:layout_margin="@dimen/margin_10"
+                android:drawableTint="@color/solidCircle"
+                android:background="@color/com_facebook_blue"
+                android:gravity="center"
+                />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:layout_margin="@dimen/margin_10"
+                android:id="@+id/linlay1"
+                android:background="@color/light_prple"
+                android:gravity="center"
+                >
 
-                <TextView
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Facebook"
-                    android:textColor="@color/headings"
-                    android:textSize="13sp" />
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:text="facebook.com/joeytrib"
-                    android:textColor="#000000"
-                    android:textSize="18sp" />
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAllCaps="true"
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="15dp"
-                    android:background="@color/grey" />
+                        android:background="@color/circleBorder"
+                        android:text="My Circle "
+                        android:textColor="@color/blk"
+                       />
 
-            </LinearLayout>
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+
 
 
         </LinearLayout>

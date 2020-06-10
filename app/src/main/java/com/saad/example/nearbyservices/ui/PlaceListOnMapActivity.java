@@ -1,6 +1,7 @@
 package com.saad.example.nearbyservices.ui;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -89,6 +90,7 @@ public class PlaceListOnMapActivity extends AppCompatActivity implements OnMapRe
     private GoogleMap mGoogleMap;
     private boolean mMapReady = false;
     private DrawerLayout mDrawerLayout;
+    ProgressDialog pd=null;
 
 
     private ActionBarDrawerToggle mToggle;
@@ -114,6 +116,8 @@ public class PlaceListOnMapActivity extends AppCompatActivity implements OnMapRe
     private FirebaseUser firebaseUser=null;
     private String userid=null;
     private View personalizelist;
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +131,9 @@ public class PlaceListOnMapActivity extends AppCompatActivity implements OnMapRe
 //
 //        actionBar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
 
+        pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+        String myStrValue = pref.getString("filter", "defaultStringIfNothingFound");
+        Log.v("huuurray",myStrValue);
         getplaceidofnearby=new ArrayList<>();
         personalizelist=(View)findViewById(R.id.place_list_view1);
         mFirebaseInstance= FirebaseDatabase.getInstance();
@@ -224,6 +231,13 @@ public class PlaceListOnMapActivity extends AppCompatActivity implements OnMapRe
         personalizelist.setOnClickListener(new View.OnClickListener() {
                                                                @Override
                                                                public void onClick(final View v) {
+                                                                   pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+                                                                   String myStrValue = pref.getString("filter", "defaultStringIfNothingFound");
+                                                                   Log.v("huuurray",myStrValue);
+                                                                   pd=new ProgressDialog(PlaceListOnMapActivity.this);
+                                                                   pd.setTitle("Connecting to Server..");
+                                                                   pd.setMessage("Your Set Filters for personalized Mashwara are "+ myStrValue +" Please Wait..");
+                                                                   pd.show();
                                                                    String s1 = "";
                                                                    for (int i = 0; i < addprefsPlace.size(); i++) {
                                                                        s1 = addprefsPlace.get(i);
@@ -238,6 +252,7 @@ public class PlaceListOnMapActivity extends AppCompatActivity implements OnMapRe
                                                                    }
                                                                    Log.i("joooin2", stringBuilder.toString());
                                                                    Log.i("loc_tag", mLocationTag);
+                                                                   chooseString(stringBuilder.toString());
                                                                    getpersonalize(v, stringBuilder.toString(), mLocationTag);
 
                                                                }
@@ -295,6 +310,11 @@ public class PlaceListOnMapActivity extends AppCompatActivity implements OnMapRe
                 overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_in);
             }
         });
+    }
+
+    private void chooseString(String s) {
+
+
     }
 
     public void concatenateString(ArrayList<Place> places)

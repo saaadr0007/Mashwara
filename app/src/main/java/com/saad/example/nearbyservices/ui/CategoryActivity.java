@@ -25,7 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.common.internal.IAccountAccessor;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -118,14 +118,6 @@ public class CategoryActivity extends AppCompatActivity implements AdapterView.O
     }
 
 
-    public void retrieveFurnFirebase(){
-
-    }
-
-    public void  FurnAdapter(ArrayList<Arraylist> horizontalListfurn)
-    {
-
-    }
     public void initialisespinner() {
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
 

@@ -73,7 +73,8 @@ public class HomeScreenActivity extends AppCompatActivity {
 
         Toolbar actionBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(actionBar);
-        setTitle(R.string.app_name);
+        setTitle("My Circle");
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         actionBar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
 

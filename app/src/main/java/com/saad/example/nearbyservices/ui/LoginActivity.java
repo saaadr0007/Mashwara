@@ -1,5 +1,6 @@
 package com.saad.example.nearbyservices.ui;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -7,15 +8,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.SyncRequest;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.facebook.AccessToken;
@@ -28,7 +27,6 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
@@ -39,29 +37,21 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.saad.example.nearbyservices.R;
 import com.saad.example.nearbyservices.model.User;
 import com.saad.example.nearbyservices.utils.SaveSharedPreference;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG ="fb" ;
-    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth,getmAuth;
     private TextView info;
     public String email,birthday,name,gender;
     int flag= -1;
+    LinearLayout suitcasee;
     private ImageView profilePictureView;
 
     private static final String EMAIL = "email";
@@ -73,8 +63,6 @@ public class LoginActivity extends AppCompatActivity {
     CallbackManager mcallbackManager;
     public String FB_ID;
     private String getPassword = "1234";
-    //  CallbackManager mCallbackManager;
-    //private String getEmail = "saad@gmail.com";
     private DatabaseReference databaseReference;
     private FirebaseDatabase database;
 
@@ -94,64 +82,20 @@ public class LoginActivity extends AppCompatActivity {
         }
         //child(userEmail).child("movie").setValue(title);
     }
-    private void addinFirebase_fbuser(String email,String username,String birthday,String gender,String fb_id)
+    private void addinFirebase_fbuser(String email,String username,String birthday,String gender,String fb_id,String age)
     {
-
         FirebaseAuth mAuth=FirebaseAuth.getInstance();
         FirebaseUser user =  mAuth.getCurrentUser();
         if(user!=null) {
             String uid = user.getUid();
-            User user1 = new User(uid, email, username,birthday,gender,fb_id);
+            User user1 = new User(uid, email, username,birthday,gender,fb_id,age);
             SaveSharedPreference.setUserName(this,user.getEmail() );
             databaseReference = database.getReference().child("Users").child(uid);
             databaseReference.setValue(user1);
         }
-        //child(userEmail).child("movie").setValue(title);
     }
 
 
-    private int getAge(String dobString){
-
-        Date date = null;
-        if (dobString.equals(null))
-        {
-            Log.v("bday_null","bdaaay_null");
-        }
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        if (sdf.equals(null))
-        {
-                Log.v("sdf_null","sdf_null");
-        }
-
-        try {
-            date = sdf.parse(dobString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        if(date == null) return 0;
-
-        Calendar dob = Calendar.getInstance();
-        Calendar today = Calendar.getInstance();
-
-        dob.setTime(date);
-
-        int year = dob.get(Calendar.YEAR);
-        int month = dob.get(Calendar.MONTH);
-        int day = dob.get(Calendar.DAY_OF_MONTH);
-
-        dob.set(year, month+1, day);
-
-        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
-
-        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)){
-            age--;
-        }
-
-
-
-        return age;
-    }
     public void validateCredentials()
     {
 
@@ -216,19 +160,29 @@ public class LoginActivity extends AppCompatActivity {
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        FacebookSdk.sdkInitialize(getApplicationContext());
 
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
+//        suitcasee=(LinearLayout)findViewById(R.id.suitcasee);
+//        suitcasee.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                final Dialog dialog = new Dialog(LoginActivity.this);
+//                dialog.setContentView(R.layout.frag_filter);
+//                dialog.show();
+//               }
+//        });
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
         database = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
+        getmAuth = FirebaseAuth.getInstance();
         register = (TextView) findViewById(R.id.textView);
-        profilePictureView=(ImageView) findViewById(R.id.imagefb);
+     //   profilePictureView = (ImageView) findViewById(R.id.imagefb);
         sigin = (Button) findViewById(R.id.button);
         uname = (EditText) findViewById(R.id.emaileditText);
         pass = (EditText) findViewById(R.id.passeditText);
-
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -246,75 +200,18 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         });
-        info =(TextView)findViewById(R.id.fbdata);
+        info = (TextView) findViewById(R.id.fbdata);
         // Initialize Facebook Login button
         mcallbackManager = CallbackManager.Factory.create();
         loginButton = findViewById(R.id.fb);
         loginButton.setReadPermissions(Arrays.asList("public_profile", "email", "user_birthday"));
-
         loginButton.registerCallback(mcallbackManager, new FacebookCallback<LoginResult>() {
             @Override
-            public void onSuccess(LoginResult loginResult) {
+            public void onSuccess(final LoginResult loginResult) {
                 Log.d(TAG, "facebook:onSuccess:" + loginResult);
-                final ProgressDialog pd=new ProgressDialog(LoginActivity.this);
-                pd.setMessage("Logging in...");
-                pd.show();
-               // handleFacebookAccessToken(loginResult.getAccessToken());
-              FB_ID=  loginResult.getAccessToken().getUserId();
-
-//                info.setText(
-//                        "User ID: "
-//                                + loginResult.getAccessToken().getUserId()
-//                                + "\n" +
-//                                "Auth Token: "
-//                                + loginResult.getAccessToken().getToken()
-//                );
-
-                GraphRequest request = GraphRequest.newMeRequest(
-                        loginResult.getAccessToken(),
-                        new GraphRequest.GraphJSONObjectCallback() {
-                            @Override
-                            public void onCompleted(JSONObject object, GraphResponse response) {
-                                Log.v("LoginActivity", response.toString());
-
-                                // Application code
-                                try {
-                                    email = object.getString("email");
-                                    birthday = object.getString("birthday"); // 01/31/1980 format
-                                    name = object.getString("name");
-                                    gender = object.getString("gender");
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-//                                info.append(
-//                                        "User Name: " + name
-//                                                + "\n" +
-//                                                "birthday: "
-//                                                + birthday
-//                                                + "\n" +
-//                                                "Gender: "
-//                                                + gender
-//                                                + "\n" +
-//                                                "Email: "
-//                                                + email
-//                                );
-                                addinFirebase_fbuser(email,name,birthday,gender,FB_ID);
-
-                            }
-                        });
-                Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,email,gender,birthday,picture.type(large)");
-                request.setParameters(parameters);
-
-
-                request.executeAsync();
-                updateUI();
-                 pd.dismiss();
-
-
+                handleFacebookAccessToken(loginResult.getAccessToken());
 
             }
-
 
             @Override
             public void onCancel() {
@@ -324,11 +221,77 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onError(FacebookException error) {
-                Log.d(TAG, "facebook:onError", error);
-                // ...
-            }
+                Log.d(TAG, "facebook:onError", error);            }
         });
     }
+
+    private void handleFacebookAccessToken(final AccessToken accessToken) {
+        final ProgressDialog pd = new ProgressDialog(LoginActivity.this);
+        pd.setMessage("Logging in...");
+        pd.show();
+        mAuth=FirebaseAuth.getInstance();
+        AuthCredential credential = FacebookAuthProvider.getCredential(accessToken.getToken());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
+                        if (task.isSuccessful()) {
+                            FB_ID = accessToken.getUserId();
+                            GraphRequest request = GraphRequest.newMeRequest(
+                                    accessToken,
+                                    new GraphRequest.GraphJSONObjectCallback() {
+                                        @Override
+                                        public void onCompleted(JSONObject object, GraphResponse response) {
+                                            Log.v("LoginActivity", response.toString());
+
+                                            // Application code
+                                            try {
+                                                email = object.getString("email");
+                                                birthday = object.getString("birthday"); // 01/31/1980 format
+                                                name = object.getString("name");
+                                                gender = object.getString("gender");
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                            String str[] = birthday.split("/");
+                                            int month = Integer.parseInt(str[0]);
+                                            int day = Integer.parseInt(str[1]);
+                                            int year = Integer.parseInt(str[2]);
+                                            String age;
+                                            Date now = new Date();
+                                            int nowMonth = now.getMonth() + 1;
+                                            int nowYear = now.getYear() + 1900;
+                                            int result = nowYear - year;
+                                            if (month > nowMonth) {
+                                                result--;
+                                            } else if (month == nowMonth) {
+                                                int nowDay = now.getDate();
+
+                                                if (day > nowDay) {
+                                                    result--;
+                                                }
+                                            }
+                                            age = String.valueOf(result);
+                                            final String finalAge = age;
+
+                                            addinFirebase_fbuser(email, name, birthday, gender, FB_ID, finalAge);
+                                        }
+                                    });
+
+                            Bundle parameters = new Bundle();
+                            parameters.putString("fields", "id,name,email,gender,birthday,picture.type(large)");
+                            request.setParameters(parameters);
+                            request.executeAsync();
+                            updateUI();
+                            pd.dismiss();
+
+
+                        }
+                    }
+                });
+    }
+
 
     @Override
     public void onStart() {
@@ -360,7 +323,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mcallbackManager.onActivityResult(requestCode, resultCode, data);
 
-      //  updateUI();
+        //  updateUI();
 
     }
 }
