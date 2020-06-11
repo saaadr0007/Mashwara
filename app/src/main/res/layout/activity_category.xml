@@ -47,6 +47,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv"
         android:text="Prioritizing, what you like"
         android:textColor="#000000"
+        android:layout_marginTop="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
@@ -54,7 +55,7 @@
     <View
         android:id="@+id/view2"
         style="@style/Divider"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv1" />
@@ -64,14 +65,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv1"/>
 <!--        android:prompt="Cuisines"-->
     <View
         android:id="@+id/view3"
         style="@style/Divider"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spinner" />
@@ -79,7 +81,7 @@
     <include
         android:id="@+id/include1"
         layout="@layout/rest_prefs2"
-         android:layout_margin="5dp"
+         android:layout_margin="10dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
@@ -89,7 +91,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinner"
+        app:layout_constraintTop_toBottomOf="@id/view3"
+      app:layout_constraintBottom_toBottomOf="@id/view3"
         app:layout_constraintVertical_bias="0.213" />
 
     <include
@@ -107,7 +110,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinner"
+        app:layout_constraintTop_toBottomOf="@id/view3"
+        app:layout_constraintBottom_toBottomOf="@id/view3"
         app:layout_constraintVertical_bias="0.213" />
 
     <View style="@style/Divider"
@@ -122,14 +126,13 @@
 
     <Button
         android:id="@+id/save"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/view"
-        android:background="@color/accent_blue"
-        android:visibility="gone"
+        android:background="@color/accent_indago"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/navigation"
         android:text="Save Preferences"
         android:textAllCaps="false"
         android:textSize="15dp"
@@ -142,11 +145,13 @@
         app:itemIconTint="@color/color_icons"
         app:itemTextColor="@color/color_icons"
         app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintHorizontal_bias="1.0"
+        app:labelVisibilityMode="labeled"
 
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/include"
+
         app:layout_constraintVertical_bias="1.0"
         app:menu="@menu/navigation_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>

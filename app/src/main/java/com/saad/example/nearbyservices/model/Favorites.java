@@ -5,6 +5,9 @@ package com.saad.example.nearbyservices.model;
  */
 public class Favorites {
     private String  Place_name, placeID;
+    Favorites()
+    {}
+
     public Favorites(String Place_name,String placeID)
     {
 

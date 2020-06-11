@@ -181,4 +181,10 @@
     <string name="retype_pass">ReType Pass</string>
     <string name="terms_conditions">Agree to Terms and Conditions</string>
     <string name="already_account">Already a Member?Sign in</string>
+    <string name="setfilter">Set Filter</string>
+    <string name="mycircle">My Circle</string>
+    <string name="favs">Favourites</string>
+    <string name="users">Users</string>
+    <string name="no_favadd">No Favourites Added Yet</string>
+    <string name="personalize">Mashwara</string>
 </resources>

@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daimajia.easing.linear.Linear;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,19 +43,53 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static com.saad.example.nearbyservices.ui.MyData.nameArray;
 
 public class usr_prof extends AppCompatActivity {
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener;
 
     private DatabaseReference mFirebaseDatabase1,getmFirebaseDatabase1;
     private FirebaseDatabase mFirebaseInstance;
     private String userid=null;
-    private RelativeLayout linlay1;
+    private Button mycircle;
+    private LinearLayout linlay1;
     private DatabaseReference databaseReference;
     private FirebaseDatabase database;
-
     public String email,birthday,name,gender,fb_id;
     private FirebaseUser firebaseUser=null;
     private CircleImageView dp_fb;
     private EditText email_profile,age_profile,birthday_profile;
     private TextView usrname;
+
+    @Override
+    public boolean onNavigateUp() {
+       onBackPressed();return true;
+    }
+
+    public void navigation() {
+        mOnNavigationItemSelectedListener
+                = new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+
+                    case R.id.home:
+                        startActivity(new Intent(usr_prof.this, LandingActivity.class));
+                        break;
+
+                    case R.id.location_favourite_icon:
+                        startActivity(new Intent(usr_prof.this, FavouritePlaceListActivity.class));
+                        break;
+
+                    case R.id.pref_icon:
+                        startActivity(new Intent(usr_prof.this,PreferenceActivity.class));
+                        break;
+                    case R.id.mycircle:
+                        startActivity(new Intent(usr_prof.this,MainActivityReq.class));
+                        break;
+
+                }
+                return false;
+            }
+        };
+    }
 
     public void init()
     {
@@ -61,6 +98,7 @@ public class usr_prof extends AppCompatActivity {
         age_profile=(EditText)findViewById(R.id.age_profile);
         birthday_profile=(EditText)findViewById(R.id.birthday_profile);
         dp_fb=(CircleImageView)findViewById(R.id.dp);
+
     }
 
     @Override
@@ -68,20 +106,27 @@ public class usr_prof extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.prof_);
+
+       // mycircle=(Button)findViewById(R.id.mycircle);
         mFirebaseInstance=FirebaseDatabase.getInstance();
         mFirebaseDatabase1 = mFirebaseInstance.getReference("Users");
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
-        linlay1=(RelativeLayout) findViewById(R.id.linlay1);
+        linlay1=(LinearLayout) findViewById(R.id.linlay);
+        navigation();
+
+        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
 
         assert firebaseUser != null;
         userid= firebaseUser.getUid();
 
-        linlay1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(usr_prof.this,MainActivityReq.class));
-            }
-        });
+//        mycircle.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(usr_prof.this,MainActivityReq.class));
+//            }
+//        });
 
 
         mFirebaseDatabase1.child(userid).addValueEventListener(new ValueEventListener() {

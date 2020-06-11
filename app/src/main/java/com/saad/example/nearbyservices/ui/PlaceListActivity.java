@@ -1,6 +1,9 @@
 package com.saad.example.nearbyservices.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -12,6 +15,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.saad.example.nearbyservices.R;
 import com.saad.example.nearbyservices.adapter.PlaceListAdapter;
 import com.saad.example.nearbyservices.model.Place;
@@ -20,6 +24,7 @@ import com.saad.example.nearbyservices.utils.GoogleApiUrl;
 public class PlaceListActivity extends AppCompatActivity {
 
     public static final String TAG = PlaceListActivity.class.getSimpleName();
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener;
 
     private ArrayList<Place> mNearByPlaceArrayList = new ArrayList<>();
     private RecyclerView mRecyclerView;
@@ -27,9 +32,51 @@ public class PlaceListActivity extends AppCompatActivity {
     private PlaceListAdapter mPlaceListAdapter;
 
     @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+    public void navigation() {
+        mOnNavigationItemSelectedListener
+                = new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+
+                    case R.id.home:
+                        startActivity(new Intent(PlaceListActivity.this, LandingActivity.class));
+                        break;
+
+
+                    case R.id.location_favourite_icon:
+                          startActivity(new Intent(PlaceListActivity.this, FavouritePlaceListActivity.class));
+                        break;
+
+                    case R.id.mycircle:
+                        startActivity(new Intent(PlaceListActivity.this, MainActivityReq.class));
+
+
+                        //  startActivity(new Intent(FavouritePlaceListActivity.this, FavouritePlaceListActivity.class));
+                        break;
+
+                    case R.id.pref_icon:
+                        startActivity(new Intent(PlaceListActivity.this,PreferenceActivity.class));
+                        break;
+
+                }
+                return false;
+            }
+        };
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_list);
+        navigation();
+
+        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         /**
          * get the intent and get the location Tag
@@ -47,13 +94,22 @@ public class PlaceListActivity extends AppCompatActivity {
                 "&" + GoogleApiUrl.API_KEY_TAG + "=" + GoogleApiUrl.API_KEY;
 
         Log.d(TAG, locationQueryStringUrl);
+
         Toolbar actionBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(actionBar);
+       // setTitle(getString(R.string.favs));
+       // actionBar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
+
+
+        //setSupportActionBar(actionBar);
         //String actionBarTitleText = getResources().getString(R.string.near_by_tag) +
-                String actionBarTitleText = " " + locationName + " " + getString(R.string.list_tag);
+        String actionBarTitleText = " " + locationName + " " + getString(R.string.list_tag);
         setTitle(actionBarTitleText);
         actionBar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         mNearByPlaceArrayList = getIntent()
                 .getParcelableArrayListExtra(GoogleApiUrl.ALL_NEARBY_LOCATION_KEY);

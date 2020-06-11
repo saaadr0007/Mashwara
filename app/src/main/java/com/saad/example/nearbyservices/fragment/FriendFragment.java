@@ -102,7 +102,9 @@ public class FriendFragment extends Fragment {
                         //---IT WORKS WHENEVER CHILD OF mMessageDatabase IS CHANGED---
                         String userthumbImage = null;
                         final String userName = dataSnapshot.child("username").getValue().toString();
+                        final String email = dataSnapshot.child("email").getValue().toString();
                         friendViewHolder.setName(userName);
+                        friendViewHolder.setName(email);
                         if (dataSnapshot.child("thumb_image").getValue() != null) {
                             userthumbImage = dataSnapshot.child("thumb_image").getValue().toString();
                             friendViewHolder.setUserImage(userthumbImage, getContext());
@@ -124,8 +126,6 @@ public class FriendFragment extends Fragment {
                                             intent.putExtra("user_id",list_user_id);
                                             startActivity(intent);
                                         }
-
-
                                     }
                                 });
                                 builder.show();

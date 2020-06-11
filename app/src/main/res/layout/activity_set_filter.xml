@@ -1,29 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:layout_margin="40dp"
-    android:background="@color/accent_purple"
 
-    android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/accent_indago"/>
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+
+        android:layout_margin="18dp"
+
+        android:background="@color/white"
+        android:layout_height="match_parent"
+        >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         >
-
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginTop="20dp"
             android:textStyle="bold"
-            android:textColor="@color/white"
-            android:text="Help Us to Recommend!"
-            android:textSize="21sp"
+            android:textColor="@color/blk"
+            android:layout_gravity="center"
+            android:text="Filter Mashwaraas"
+            android:textSize="18sp"
+            android:layout_marginBottom="2dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+
+            android:textColor="@color/blk"
+            android:textSize="12sp"
+            android:layout_gravity="center"
+            android:text="Selecting the following filters would help us generate, recommendations as you want. "
             android:layout_marginBottom="20dp"/>
-    </LinearLayout>
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_marginBottom="5dp"
@@ -33,28 +61,29 @@
         <TextView
 
 
-            android:textSize="21sp"
 
             android:layout_width="200dp"
-            android:textStyle="bold"
+
             android:text="Age"
-            android:textColor="@color/white"
+
+            android:textColor="@color/blk"
 
             android:gravity="center"
             android:layout_height="match_parent"/>
 
         <in.ishankhanna.materialcheckboxview.MaterialCheckBox
             android:id="@+id/age_checkbox"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
 
-            app:mcb_checkedStateColor="@color/green"
+            app:mcb_checkedStateColor="@color/com_facebook_blue"
+
             app:mcb_lineColor="@color/white"
             app:mcb_radius="28dp"
             app:mcb_shadowColor="@color/gradEnd"
             app:mcb_shadowRadius="8dp"
-            app:mcb_unCheckedStateColor="@color/accent_red" />
+            app:mcb_unCheckedStateColor="@color/accent_indago" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -62,12 +91,12 @@
         android:orientation="horizontal"
         >
         <TextView
-            android:textSize="21sp"
             android:layout_width="200dp"
             android:gravity="center"
-            android:textStyle="bold"
-            android:textColor="@color/white"
+
             android:text="Search History"
+
+            android:textColor="@color/blk"
             android:layout_height="match_parent"/>
         <in.ishankhanna.materialcheckboxview.MaterialCheckBox
             android:layout_width="match_parent"
@@ -75,8 +104,9 @@
             android:id="@+id/search_checkbox"
             app:mcb_radius="28dp"
             app:mcb_shadowRadius="8dp"
-            app:mcb_checkedStateColor="@color/green"
-            app:mcb_unCheckedStateColor="@color/accent_red"
+            app:mcb_checkedStateColor="@color/com_facebook_blue"
+
+            app:mcb_unCheckedStateColor="@color/accent_indago"
             app:mcb_lineColor="@color/white"
             app:mcb_shadowColor="@color/gradEnd"/>
 
@@ -89,11 +119,10 @@
         android:orientation="horizontal"
         >
         <TextView
-            android:textSize="21sp"
+
             android:layout_width="200dp"
             android:gravity="center"
-            android:textColor="@color/white"
-            android:textStyle="bold"
+            android:textColor="@color/blk"
             android:text="My Circle"
             android:layout_height="match_parent"/>
         <in.ishankhanna.materialcheckboxview.MaterialCheckBox
@@ -102,8 +131,9 @@
             android:id="@+id/friends_checkbox"
             app:mcb_radius="28dp"
             app:mcb_shadowRadius="8dp"
-            app:mcb_checkedStateColor="@color/green"
-            app:mcb_unCheckedStateColor="@color/accent_red"
+            app:mcb_checkedStateColor="@color/com_facebook_blue"
+
+            app:mcb_unCheckedStateColor="@color/accent_indago"
             app:mcb_lineColor="@color/white"
             app:mcb_shadowColor="@color/gradEnd"/>
 
@@ -118,10 +148,8 @@
         <TextView
             android:layout_width="200dp"
             android:text="Favourites Set"
-            android:textSize="21sp"
             android:gravity="center"
-            android:textColor="@color/white"
-            android:textStyle="bold"
+            android:textColor="@color/blk"
             android:layout_height="match_parent"/>
         <in.ishankhanna.materialcheckboxview.MaterialCheckBox
             android:layout_width="wrap_content"
@@ -129,8 +157,9 @@
             android:id="@+id/favplaces_checkbox"
             app:mcb_radius="28dp"
             app:mcb_shadowRadius="8dp"
-            app:mcb_checkedStateColor="@color/green"
-            app:mcb_unCheckedStateColor="@color/accent_red"
+            app:mcb_checkedStateColor="@color/com_facebook_blue"
+
+            app:mcb_unCheckedStateColor="@color/accent_indago"
             app:mcb_lineColor="@color/white"
             app:mcb_shadowColor="@color/gradEnd"/>
 
@@ -145,10 +174,8 @@
         <TextView
             android:layout_width="200dp"
             android:text="Preferences Set"
-            android:textSize="21sp"
-            android:textColor="@color/white"
+            android:textColor="@color/blk"
             android:gravity="center"
-            android:textStyle="bold"
             android:layout_height="match_parent"/>
         <in.ishankhanna.materialcheckboxview.MaterialCheckBox
             android:layout_width="wrap_content"
@@ -156,8 +183,8 @@
             android:id="@+id/pref_checkbox"
             app:mcb_radius="28dp"
             app:mcb_shadowRadius="8dp"
-            app:mcb_checkedStateColor="@color/green"
-            app:mcb_unCheckedStateColor="@color/accent_red"
+            app:mcb_checkedStateColor="@color/com_facebook_blue"
+            app:mcb_unCheckedStateColor="@color/accent_indago"
             app:mcb_lineColor="@color/white"
             app:mcb_shadowColor="@color/gradEnd"/>
 
@@ -167,12 +194,36 @@
     <Button
         android:id="@+id/savefilters"
         android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginTop="2dp"
+        android:gravity="center"
+        android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:onClick="savefilters"
+        android:layout_marginRight="@dimen/margin_10"
+        android:layout_marginLeft="@dimen/margin_10"
         android:text="Save Changes"
-        android:textSize="21sp"
+        android:textAllCaps="false"
+
+        android:background="@color/accent_indago"
         android:textColor="@color/white"
-        android:background="@drawable/circle"
+
     />
+
+
+    </LinearLayout>
+
+
+    </LinearLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:labelVisibilityMode="labeled"
+        android:layout_gravity="bottom"
+
+        android:background="@color/accent_indago"
+        android:layout_alignParentBottom="true"
+        app:itemIconTint="@color/color_icons"
+        app:itemTextColor="@color/color_icons"
+        app:menu="@menu/navigation_menu" />
 </LinearLayout>

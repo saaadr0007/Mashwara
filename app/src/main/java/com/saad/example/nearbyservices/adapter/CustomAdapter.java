@@ -77,83 +77,28 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
         MyViewHolder myViewHolder = new MyViewHolder(view,clicklistener);
         // imgheart=(ImageView) itemView.findViewById(R.id.unheart);
-
         return myViewHolder;
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int listPosition) {
-
         TextView textViewName = holder.textViewName;
         // TextView textViewVersion = holder.textViewVersion;
         ImageView imageView = holder.imageViewIcon;
 
         textViewName.setText(dataSet.get(listPosition).getName());
-        //textViewVersion.setText(dataSet.get(listPosition).getVersion());
         imageView.setImageResource(dataSet.get(listPosition).getImage());
-
-
-//        imgheart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (imgheart.getDrawable().getConstantState().equals(
-//                        ContextCompat.getDrawable(getApplicationContext(),
-//                                R.drawable.fillheart).getConstantState()))
-//                {
-//                    Toast.makeText(getApplicationContext(),"Preference Removed",Toast.LENGTH_LONG).show();
-//                    imgheart.setImageResource(R.drawable.unheart);
-//                }
-//                else if(imgheart.getDrawable().getConstantState().equals(
-//                        ContextCompat.getDrawable(getApplicationContext(),
-//                                R.drawable.unheart).getConstantState())){
-//                    Toast.makeText(v.getContext(), textViewName+" Marked Preference", Toast.LENGTH_SHORT).show();
-//                    //imgheart=(ImageView)itemView.findViewById(R.id.img_heart);
-//                    rotate = AnimationUtils.loadAnimation(getApplicationContext(),
-//                            R.anim.rotate);
-//                    imgheart.setImageResource(R.drawable.fillheart);
-//                    //  imgheart.setVisibility(View.VISIBLE);
-//                    imgheart.startAnimation(rotate);
-//                }
-//            }
-//        });
-    }@Override
+    }
+    @Override
     public long getItemId(int position) {
         return position;
     }
-
     @Override
     public int getItemViewType(int position) {
         return position;
     }
-
     @Override
     public int getItemCount() {
         return dataSet.size();
     }
-
-//    public void preferenceset(View view) {
-//        ImageView imgheart = (ImageView) view.findViewById(R.id.unheart);
-//        Animation rotate;
-//
-//        if (imgheart.getDrawable().getConstantState().equals(
-//                ContextCompat.getDrawable(getApplicationContext(),
-//                        R.drawable.fillheart).getConstantState())) {
-//            Log.i("msg2", "infif");
-//
-//            Toast.makeText(getApplicationContext(), "Preference Removed", Toast.LENGTH_LONG).show();
-//            imgheart.setImageResource(R.drawable.unheart);
-//        } else if (imgheart.getDrawable().getConstantState().equals(
-//                ContextCompat.getDrawable(getApplicationContext(),
-//                        R.drawable.unheart).getConstantState())) {
-//            Log.i("msg2", "insif");
-//            //Toast.makeText(v.getContext(), textViewName.toString() + " Marked Favourite", Toast.LENGTH_SHORT).show();
-//            //imgheart=(ImageView)itemView.findViewById(R.id.img_heart);
-//            rotate = AnimationUtils.loadAnimation(getApplicationContext(),
-//                    R.anim.rotate);
-//            imgheart.setImageResource(R.drawable.fillheart);
-//            //  imgheart.setVisibility(View.VISIBLE);
-//            imgheart.startAnimation(rotate);
-//        }
-//
-//    }
 }

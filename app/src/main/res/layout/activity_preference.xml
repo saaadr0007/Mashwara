@@ -5,6 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.saad.example.nearbyservices.ui.PreferenceActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        android:layout_height="?actionBarSize"
+        android:background="@color/accent_indago"/>
 
     <ImageView
         android:id="@+id/img_heart"
@@ -41,7 +50,7 @@
         android:id="@+id/add_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/accent_blue"
+        android:background="@color/accent_indago"
         app:layout_constraintTop_toBottomOf="@+id/down"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

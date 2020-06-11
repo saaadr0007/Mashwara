@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -42,6 +42,7 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
+            android:background="@color/accent_indago"
             android:layout_height="wrap_content">
         </com.google.android.material.tabs.TabLayout>
 
@@ -54,5 +55,16 @@
         android:layout_below="@+id/app_bar">
 
     </androidx.viewpager.widget.ViewPager>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:labelVisibilityMode="labeled"
+        android:background="@color/accent_indago"
+        android:layout_alignParentBottom="true"
+        app:itemIconTint="@color/color_icons"
+        app:itemTextColor="@color/color_icons"
+        app:menu="@menu/navigation_menu" />
+
 
 </RelativeLayout>

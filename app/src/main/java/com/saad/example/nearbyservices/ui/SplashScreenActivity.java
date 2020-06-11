@@ -179,7 +179,7 @@ public class SplashScreenActivity extends AwesomeSplash implements
             }
             getDescripionfurn.add(new Pojo(key,desc));
         }
-        Log.d("getobjj",getDescripion.get(0).getDescripion());
+        Log.d("getobjj",String.valueOf(getDescripion.size()));
         Log.d("getobjj",getDescripionfurn.get(0).getDescripion());
 
     }
@@ -216,7 +216,7 @@ public class SplashScreenActivity extends AwesomeSplash implements
 
         }
 
-        configSplash.setBackgroundColor(R.color.accent_purple); //any color you want form colors.xml
+        configSplash.setBackgroundColor(R.color.accent_indago); //any color you want form colors.xml
         configSplash.setAnimCircularRevealDuration(2000); //int ms
         configSplash.setRevealFlagX(Flags.REVEAL_RIGHT);  //or Flags.REVEAL_LEFT
         configSplash.setRevealFlagY(Flags.REVEAL_BOTTOM); //or Flags.REVEAL_TOP

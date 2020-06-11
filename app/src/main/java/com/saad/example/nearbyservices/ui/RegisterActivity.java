@@ -118,7 +118,6 @@ public class RegisterActivity extends AppCompatActivity {
                                         // updateUI();
                                         Toast.makeText(getApplicationContext(), "Failure!", Toast.LENGTH_SHORT).show();
                                     }
-
                                     // ...
                                 }
                             });

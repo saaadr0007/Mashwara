@@ -4,18 +4,21 @@ package com.saad.example.nearbyservices.model;
  * Created by Team Mashwara on 6/10/2020.
  */
 public class Filter {
-    String filter;
-
-    public Filter(String filter)
+    String item;
+    Filter()
     {
-        this.filter=filter;
+
     }
 
+    public Filter(String item)
+    {
+        this.item=item;
+    }
     public String getFilter() {
-        return filter;
+        return item;
     }
 
     public void setFilter(String filter) {
-        this.filter = filter;
+        this.item = item;
     }
 }

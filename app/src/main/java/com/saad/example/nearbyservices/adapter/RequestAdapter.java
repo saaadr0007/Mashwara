@@ -1,6 +1,7 @@
 package com.saad.example.nearbyservices.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -56,7 +58,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
 
     public class RequestViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView displayName;
+        public TextView displayName,disemail;
         public TextView displayStatus;
         public CircleImageView displayImage;
         public ImageView imageView;
@@ -67,6 +69,8 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
             ctx = itemView.getContext();
 
             displayName = (TextView)itemView.findViewById(R.id.textViewSingleListName);
+            displayName = (TextView)itemView.findViewById(R.id.textViewSingleListemail);
+
             //displayStatus = (TextView) itemView.findViewById(R.id.textViewSingleListStatus);
             displayImage = (CircleImageView)itemView.findViewById(R.id.circleImageViewUserImage);
             //imageView = (ImageView)itemView.findViewById(R.id.userSingleOnlineIcon);
@@ -91,7 +95,9 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String userName = dataSnapshot.child("username").getValue().toString();
+                String email = dataSnapshot.child("email").getValue().toString();
                 holder.displayName.setText(userName);
+                holder.displayName.setText(email);
 
                 if (dataSnapshot.child("thumb_image").getValue()!=null) {
                     String userThumbImage = dataSnapshot.child("thumb_image").getValue().toString();
@@ -100,6 +106,28 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                     //holder.displayStatus.setText(userStatus);
                     Picasso.with(holder.displayImage.getContext()).load(userThumbImage).placeholder(R.drawable.man).into(holder.displayImage);
                 }
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CharSequence[] options = new CharSequence[]{"Open Profile"};
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+                        builder.setTitle("Select Options");
+                        builder.setItems(options,new AlertDialog.OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if(which == 0){
+                                    Intent intent=new Intent(ctx, ProfileActivity.class);
+                                    intent.putExtra("user_id",requestList.get(position));
+                                    ctx.startActivity(intent);
+                                }
+                            }
+                        });
+                        builder.show();
+
+                    }
+                });
+
+
             }
 
             @Override
@@ -108,16 +136,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
             }
         });
 
-       holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                Intent intent = new Intent(ctx,ProfileActivity.class);
-                intent.putExtra("user_id",requestList.get(position));
-
-
-            }
-        });
     }
 
     @Override

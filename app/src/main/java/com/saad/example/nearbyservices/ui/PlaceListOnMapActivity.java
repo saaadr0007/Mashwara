@@ -70,9 +70,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.saad.example.nearbyservices.R;
 import com.saad.example.nearbyservices.model.Attribution;
+import com.saad.example.nearbyservices.model.Filter;
 import com.saad.example.nearbyservices.model.Photo;
 import com.saad.example.nearbyservices.model.Place;
 import com.saad.example.nearbyservices.model.Preference;
+import com.saad.example.nearbyservices.model.User;
 import com.saad.example.nearbyservices.utils.AppController;
 import com.saad.example.nearbyservices.utils.GoogleApiUrl;
 
@@ -82,20 +84,24 @@ public class PlaceListOnMapActivity extends AppCompatActivity implements OnMapRe
 
     public static final String TAG = PlaceListOnMapActivity.class.getSimpleName();
 
-    private StringBuilder stringBuilder;
+    private StringBuilder stringBuilder,getStringBuilder;
     private ArrayList<Place> mNearByPlaceArrayList = new ArrayList<>();
-    private ArrayList<String> addFavPlace=new ArrayList<>();
+    static private ArrayList<String> addFavPlace=new ArrayList<>();
+    private ArrayList<String> userdataarray=new ArrayList<>();
+    private ArrayList<String> useremailarr=new ArrayList<>();
+    private ArrayList<String> friendskeyarr=new ArrayList<>();
+    private ArrayList<String> searcharray=new ArrayList<>();
+   static private ArrayList<String> frienddata=new ArrayList<>();
+    static private ArrayList<String> getF=new ArrayList<>();
    static private ArrayList<String> addprefsPlace=new ArrayList<>();
     private String getstring=" ";
     private GoogleMap mGoogleMap;
     private boolean mMapReady = false;
     private DrawerLayout mDrawerLayout;
     ProgressDialog pd=null;
-
+    private String uid;
 
     private ActionBarDrawerToggle mToggle;
-
-
 
     private NavigationView mNavigationView;
 
@@ -108,12 +114,16 @@ public class PlaceListOnMapActivity extends AppCompatActivity implements OnMapRe
     private ArrayList<String> getplaceidofnearby;
     private ArrayList<Place> getcommon=new ArrayList<>();
     private MapFragment mMapFragment;
+
     private FirebaseDatabase mFirebaseInstance;
     private static JSONArray rootJsonArray;
     ArrayList<String> getcommonplaces;
-    private DatabaseReference mFirebaseDatabase1,getmFirebaseDatabase1;
-    private String mCurrentPlace;
+    private ArrayList<String> savedfilterarr=new ArrayList<>();
+    StringBuilder convertedarr=new StringBuilder();
+    private DatabaseReference mFirebaseDatabase1,getmFirebaseDatabase1,FirebaseDatabase2,fb3;
     private FirebaseUser firebaseUser=null;
+    private DatabaseReference databaseReference;
+    private FirebaseDatabase database;
     private String userid=null;
     private View personalizelist;
     SharedPreferences pref;
@@ -125,66 +135,240 @@ public class PlaceListOnMapActivity extends AppCompatActivity implements OnMapRe
         setContentView(R.layout.activity_place_list_on_map);
 
         Toolbar actionBar = (Toolbar) findViewById(R.id.toolbar);
+        database = FirebaseDatabase.getInstance();
+        pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+
 //       setSupportActionBar(actionBar);
 //        setTitle(R.string.app_name);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //
 //        actionBar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
 
-        pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
-        String myStrValue = pref.getString("filter", "defaultStringIfNothingFound");
-        Log.v("huuurray",myStrValue);
+
         getplaceidofnearby=new ArrayList<>();
         personalizelist=(View)findViewById(R.id.place_list_view1);
         mFirebaseInstance= FirebaseDatabase.getInstance();
         mFirebaseDatabase1 = mFirebaseInstance.getReference("Favourites");
         getmFirebaseDatabase1=mFirebaseInstance.getReference("Preferences");
+        fb3=mFirebaseInstance.getReference("friends");
+
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
         stringBuilder=new StringBuilder();
+        getStringBuilder=new StringBuilder();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.draw_layout);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
 
         //set the drawerListener
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
+
         assert firebaseUser != null;
         userid= firebaseUser.getUid();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            uid = user.getUid();
+
+        }
+       Log.v("goodscene",String.valueOf(SplashScreenActivity.getDescripion.size()));
 
 
-
-        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
-        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        fb3.child(userid).addValueEventListener(new ValueEventListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String key = "";
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.getKey() != null) {
+                        key = snapshot.getKey();
+                        friendskeyarr.add(key);
+                        Log.v("myfirned", key);
+                        mFirebaseDatabase1.child(friendskeyarr.get(0)).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    for(int i=0;i<friendskeyarr.size();i++) {
+//                        if (snapshot.getKey().equals(friendskeyarr.get(i))) {
+                                    String placeid=snapshot.child("placeId").getValue().toString();
+                                    for (int i=0;i<SplashScreenActivity.getDescripion.size();i++)
+                                    {
+                                        if(placeid.equals(SplashScreenActivity.getDescripion.get(i).getKey()) ||placeid.equals(SplashScreenActivity.getDescripionfurn.get(i).getKey()) )
+                                            frienddata.add(SplashScreenActivity.getDescripion.get(i).getDescripion());
 
-                    case R.id.location_favourite_icon:
-                        startActivity(new Intent(PlaceListOnMapActivity.this, FavouritePlaceListActivity.class));
-                        mDrawerLayout.closeDrawers();
-                        break;
-                    case R.id.home:
-                        startActivity(new Intent(PlaceListOnMapActivity.this, LandingActivity.class));
-                        mDrawerLayout.closeDrawers();
-                        break;
+
+                                    }
+
+
+                                  //  frienddata.add(placeid);
+                                    Log.i("majaaay","majaay11"+frienddata.size());
+
+////                            Log.v("yuhu1","wwo"+frienddata.get(i));
+//                        }
+//                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        getmFirebaseDatabase1.child(friendskeyarr.get(0)).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    Preference prefs = snapshot.getValue(Preference.class);
+                                    assert prefs != null;
+                                    Log.i("majaaay","majaay"+prefs.getPref_name());
+                                    frienddata.add(prefs.getPref_name());
+//
+                                    //   Log.v("gettttpref",prefs.getPref_name());
+//
+                            pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+                            editor= pref.edit();
+                            editor.putString("getpref", frienddata.toString());
+                            editor.commit();
+
+
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
 
 
 
-                    case R.id.pref_icon:
-                        startActivity(new Intent(PlaceListOnMapActivity.this,PreferenceActivity.class));
-                        mDrawerLayout.closeDrawers();
-                        break;
 
-//                    case R.id.about_icon:
-//                        Dialog aboutDialog = new Dialog(HomeScreenActivity.this, R.style.AboutDialog);
-//                        aboutDialog.setTitle(getString(R.string.about));
-//                        aboutDialog.setContentView(R.layout.about_dialog);
-//                        aboutDialog.show();
-//                        mDrawerLayout.closeDrawers();
-//                        break;
+
+
+
+
+
+
+
+//                        pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+//                        editor= pref.edit();
+//                        StringBuilder y=new StringBuilder();
+//                        for (String s : friendskeyarr)
+//                        {
+//                            y.append(s);
+//                            Log.i("getttt",y.toString());
+//                           // y.append(" ");
+//                        }
+//                        editor.putString("takekey", y.toString());
+//                        editor.commit();
+                    }
+                    else
+                        Log.v("yuyuyu","yuyuy");
+
                 }
-                return false;
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+
+        });
+
+
+
+        databaseReference = database.getReference("FiltersSet");
+        databaseReference.child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Log.i("placeee", dataSnapshot.getKey());
+               // pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String getSavedfilters =   snapshot.child("filter").getValue().toString();
+                    Log.v("saveddfil",getSavedfilters);
+                    savedfilterarr.add(getSavedfilters);
+                }
+                for (String s : savedfilterarr)
+                {
+                    convertedarr.append(s);
+                    convertedarr.append(" ");
+                }
+                Log.v("seebuilder",convertedarr.toString());
+                pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+                editor= pref.edit();
+                editor.putString("filter", convertedarr.toString());
+                editor.commit();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
+
+        FirebaseDatabase2 = mFirebaseInstance.getReference("Users");
+        FirebaseDatabase2.child(userid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String ageofuser = "";
+                String email="";
+                firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                userid = firebaseUser.getUid();
+                Log.i("placeee", dataSnapshot.getKey());
+
+
+                if (dataSnapshot.child("age").getValue() != null) {
+
+                    ageofuser = dataSnapshot.child("age").getValue(String.class);
+                    email = dataSnapshot.child("email").getValue(String.class);
+                    assert ageofuser != null;
+                    Log.v("ageee", ageofuser);
+                    userdataarray.add(ageofuser);
+                    useremailarr.add(email);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+
+        });
+
+        //get emails of the friend
+
+        Log.v("myuserid",userid);
+
+        //get History
+        FirebaseDatabase2 = mFirebaseInstance.getReference("Search History");
+        String myStrValue1 = pref.getString("takekey", "defaultStringIfNothingFound");
+        Log.v("huuurray",myStrValue1);
+
+        //id
+      //  String id=friendskeyarr.get(0);
+
+
+        FirebaseDatabase2.child(userid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String getname="";
+                Log.i("placeee", dataSnapshot.getKey());
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    getname=snapshot.child("filter").getValue().toString();
+
+                    searcharray.add(getname);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+
+        });
+        //getprefs
         getmFirebaseDatabase1.child(userid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -207,16 +391,29 @@ public class PlaceListOnMapActivity extends AppCompatActivity implements OnMapRe
 
 
         });
+
+        String myStrValue2 = pref.getString("takekey", "defaultStringIfNothingFound");
+        Log.v("huuurray",myStrValue1);
+//        String id1=friendskeyarr.get(0);
+
+
+        //getfavorourites
         mFirebaseDatabase1.child(userid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.i("placeee", dataSnapshot.getKey());
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Place place = snapshot.getValue(Place.class);
-                    addFavPlace.add(place.getPlaceId());
+                   String placeid=snapshot.child("placeId").getValue().toString();
+                   for (int i=0;i<SplashScreenActivity.getDescripion.size();i++)
+                   {
+                        if(placeid.equals(SplashScreenActivity.getDescripion.get(i).getKey()) ||placeid.equals(SplashScreenActivity.getDescripionfurn.get(i).getKey()) )
+                                  addFavPlace.add(SplashScreenActivity.getDescripion.get(i).getDescripion());
+
+
+                    }
                 }
 
-               // Log.i("joooin1", stringBuilder.toString());
+                // Log.i("joooin1", stringBuilder.toString());
 
 
             }
@@ -228,41 +425,73 @@ public class PlaceListOnMapActivity extends AppCompatActivity implements OnMapRe
 
 
         });
+
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+
+                    case R.id.location_favourite_icon:
+                        startActivity(new Intent(PlaceListOnMapActivity.this, FavouritePlaceListActivity.class));
+                        mDrawerLayout.closeDrawers();
+                        break;
+
+                    case R.id.home:
+                        startActivity(new Intent( PlaceListOnMapActivity.this, LandingActivity.class));
+                        mDrawerLayout.closeDrawers();
+                        break;
+
+                    case R.id.pref_icon:
+                        startActivity(new Intent(PlaceListOnMapActivity.this,PreferenceActivity.class));
+                        mDrawerLayout.closeDrawers();
+                        break;
+
+//                    case R.id.about_icon:
+//                        Dialog aboutDialog = new Dialog(HomeScreenActivity.this, R.style.AboutDialog);
+//                        aboutDialog.setTitle(getString(R.string.about));
+//                        aboutDialog.setContentView(R.layout.about_dialog);
+//                        aboutDialog.show();
+//                        mDrawerLayout.closeDrawers();
+//                        break;
+                }
+                return false;
+            }
+        });
+
+
         personalizelist.setOnClickListener(new View.OnClickListener() {
                                                                @Override
-                                                               public void onClick(final View v) {
-                                                                   pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+                                                               public void onClick(final View v) {  pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                                                                    String myStrValue = pref.getString("filter", "defaultStringIfNothingFound");
                                                                    Log.v("huuurray",myStrValue);
+
                                                                    pd=new ProgressDialog(PlaceListOnMapActivity.this);
                                                                    pd.setTitle("Connecting to Server..");
-                                                                   pd.setMessage("Your Set Filters for personalized Mashwara are "+ myStrValue +" Please Wait..");
+                                                                   pd.setMessage("Your Set Filters for Personalized Mashwara's are "+ myStrValue+"\n"+"Please Wait..");
                                                                    pd.show();
                                                                    String s1 = "";
-                                                                   for (int i = 0; i < addprefsPlace.size(); i++) {
-                                                                       s1 = addprefsPlace.get(i);
-                                                                       stringBuilder.append(s1);
-                                                                       stringBuilder.append(" ");
-                                                                   }
-                                                                   String s = "";
-                                                                   for (int i = 0; i < addFavPlace.size(); i++) {
-                                                                       s = addFavPlace.get(i);
-                                                                       stringBuilder.append(s);
-                                                                       stringBuilder.append(" ");
-                                                                   }
+//                                                                   for (int i = 0; i < addprefsPlace.size(); i++) {
+//                                                                       s1 = addprefsPlace.get(i);
+//                                                                       stringBuilder.append(s1);
+//                                                                       stringBuilder.append(" ");
+//                                                                   }
+//                                                                   String s = "";
+//                                                                   for (int i = 0; i < addFavPlace.size(); i++) {
+//                                                                       s = addFavPlace.get(i);
+//                                                                       stringBuilder.append(s);
+//                                                                       stringBuilder.append(" ");
+//                                                                   }
                                                                    Log.i("joooin2", stringBuilder.toString());
                                                                    Log.i("loc_tag", mLocationTag);
-                                                                   chooseString(stringBuilder.toString());
-                                                                   getpersonalize(v, stringBuilder.toString(), mLocationTag);
-
+                                                                   String copy="";
+                                                                   copy =chooseString(convertedarr);
+                                                                   Log.v("getsssscopy",copy);
+                                                                 //  Log.v("getsssscopyhigh",stringBuilder.toString());
+                                                                   getpersonalize(v, copy, mLocationTag);
+                                                                   pd.dismiss();
                                                                }
                                                            });
-
-
-
-            //        Toast.makeText(this,addFavPlace.get(0),Toast.LENGTH_SHORT).show();
-
-//
                 /**
          * Get the reference of the map fragment
          */
@@ -312,37 +541,80 @@ public class PlaceListOnMapActivity extends AppCompatActivity implements OnMapRe
         });
     }
 
-    private void chooseString(String s) {
+    private String chooseString(StringBuilder myStrValue) {
+//        pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+//        String myStrValue = pref.getString("filter", "defaultStringIfNothingFound");
+//        Log.v("huuurray!!",myStrValue);
+        String myStrValu="";
 
+        String s="";
+        myStrValu=myStrValue.toString();
 
-    }
+        if (myStrValu.contains("age")) {
+            for (int i=0;i<userdataarray.size();i++)
+            {
+                   s = userdataarray.get(i);
+                   getStringBuilder.append(s);
+                   getStringBuilder.append(" ");
+                   Log.v("huuurray1_age",getStringBuilder.toString());
 
-    public void concatenateString(ArrayList<Place> places)
-    {
-//        String s =places.join
-
-        ArrayList<String> listing = new ArrayList<String>();
-        String item;
-        for(int i=0;i<places.size();i++)
+            }
+        }
+        if (myStrValu.contains("favourites"))
         {
-            item = places.get(i).getPlaceId();
-            listing.add(item);
-            //getPath is a method in the customtype class which will return value in string format
+            String s1 = "";
+
+            for (int i = 0; i < addFavPlace.size(); i++) {
+                s1 = addFavPlace.get(i);
+                Log.v("getfff","yuhu");
+                getStringBuilder.append(s1);
+                getStringBuilder.append(" ");
+                Log.v("huuurray1_fav",getStringBuilder.toString());
+            }
 
         }
-        final CharSequence[] fol_list = listing.toArray(new CharSequence[listing.size()]);
+        if (myStrValu.contains("prefs"))
+        {
+            String s1 = "";
+            for (int i = 0; i < addprefsPlace.size(); i++) {
+                s1 = addprefsPlace.get(i);
+                getStringBuilder.append(s1);
+                getStringBuilder.append(" ");
 
-        String joinedString = null;
+            }
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            joinedString = String.join(" ", fol_list);
+            Log.v("huuurray3_prefs",getStringBuilder.toString());
+
         }
-        Log.i("joiinn",joinedString);
-//        for (int i=0;i<places.size();i++)
-//        {
-//
-//        }
+
+        if (myStrValu.contains("search"))
+        {
+            for (int i=0;i<searcharray.size();i++)
+            {
+
+                    s = searcharray.get(i);
+                    getStringBuilder.append(s);
+                    getStringBuilder.append(" ");
+                    Log.v("huuurray2_search",getStringBuilder.toString());
+            }
+        }
+        String myStrValue11 = pref.getString("getpref", "defaultStringIfNothingFound");
+        Log.v("huuurray111",myStrValue11);
+        if (myStrValu.contains("friends"))
+        {
+            String s1 = "";
+            if(!myStrValu.isEmpty()){
+                getStringBuilder.append(myStrValue11);
+                getStringBuilder.append(myStrValue11);
+                getStringBuilder.append(" ");
+                Log.v("huuurray2_friend",getStringBuilder.toString());
+            }
+
+
+        }
+        return getStringBuilder.toString();
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -579,14 +851,11 @@ public class PlaceListOnMapActivity extends AppCompatActivity implements OnMapRe
     }
 
     public void getpersonalize(View view,String s,String locationTag) {
-
+        Log.v("keristring",s);
         if(locationTag.equals("restaurant")) {
             getcommonplaces = new ArrayList<>();
             GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-            if (addFavPlace.isEmpty() && addprefsPlace.isEmpty()) {
-                //  Snackbar.make(PlaceListOnMapActivity.this, "This is main activity", Snackbar.LENGTH_LONG);
-                Toast.makeText(this, "Please Add Favorites or Preferences ", Toast.LENGTH_LONG).show();
-            } else {
+
                 Log.i("favoriteee", s);
                 Call<List<Retrophoto>> call = service.getpersonalized(s);
                 Log.i("Caalll", call.request().url().toString());
@@ -598,6 +867,9 @@ public class PlaceListOnMapActivity extends AppCompatActivity implements OnMapRe
                         if (response.body() != null) {
                             getcommonplaces = searchCcmmon(response.body(), getplaceidofnearby);
                             System.out.println(getcommonplaces);
+                            addFavPlace.clear();
+                            addprefsPlace.clear();
+                            stringBuilder=new StringBuilder();
                             Intent placeDetailTransferIntent = new Intent(PlaceListOnMapActivity.this, PlaceListActivity.class);
                             placeDetailTransferIntent.putParcelableArrayListExtra(
                                     GoogleApiUrl.ALL_NEARBY_LOCATION_KEY, getcommon);
@@ -618,7 +890,7 @@ public class PlaceListOnMapActivity extends AppCompatActivity implements OnMapRe
                         Toast.makeText(PlaceListOnMapActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }
                 });
-            }
+
         }else if(locationTag.equals("furniture_store"))
         {
             getcommonplaces = new ArrayList<>();

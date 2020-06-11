@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
@@ -65,7 +66,13 @@ private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemS
     private DatabaseReference mFirebaseDatabase1;
     private FirebaseDatabase mFirebaseInstance;
 
-public void navigation() {
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    public void navigation() {
       mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -73,7 +80,7 @@ public void navigation() {
             switch (item.getItemId()) {
 
                 case R.id.home:
-                    startActivity(new Intent(LandingActivity.this, LandingActivity.class));
+                  //  startActivity(new Intent(LandingActivity.this, LandingActivity.class));
                     break;
 
 
@@ -81,32 +88,18 @@ public void navigation() {
                     startActivity(new Intent(LandingActivity.this, FavouritePlaceListActivity.class));
                     break;
 
-//                case R.id.share_icon:
-//                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
-//                    shareIntent.setType("text/plain");
-//                    shareIntent.putExtra(Intent.EXTRA_TEXT, "Hey, Checkout AroundMe Application");
-//                    startActivity(Intent.createChooser(shareIntent, "Share App.."));
-//                    break;
+                case R.id.mycircle:
+                    startActivity(new Intent(LandingActivity.this, MainActivityReq.class));
 
-//                    case R.id.feedback_icon:
-//                        Intent mailToIntent = new Intent(Intent.ACTION_SEND);
-//                        mailToIntent.setData(Uri.parse("mailto:"));
-//                        mailToIntent.setType("text/plain");
-//                        mailToIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"saadrafique1000@gmail.com"});
-//                        startActivity(Intent.createChooser(mailToIntent, "Send Mail.."));
-//                        mDrawerLayout.closeDrawers();
-//                        break;
+
+                    //startActivity(new Intent(LandingActivity.this, FavouritePlaceListActivity.class));
+                    break;
+
 
                 case R.id.pref_icon:
                     startActivity(new Intent(LandingActivity.this,PreferenceActivity.class));
                     break;
 
-//                case R.id.about_icon:
-//                    Dialog aboutDialog = new Dialog(LandingActivity.this, R.style.AboutDialog);
-//                    aboutDialog.setTitle(getString(R.string.about));
-//                    aboutDialog.setContentView(R.layout.about_dialog);
-//                    aboutDialog.show();
-//                    break;
             }
             return false;
         }
@@ -136,8 +129,7 @@ public void searchFeature() {
         SearchView searchView = (SearchView) findViewById(R.id.search);
 
         searchView.setQueryHint(getString(R.string.search_hint));
-    ImageView searchIcon=
-            searchView.findViewById(androidx.appcompat.R.id.search_mag_icon);
+        ImageView searchIcon= searchView.findViewById(androidx.appcompat.R.id.search_mag_icon);
     searchIcon.setColorFilter(Color.WHITE);
     EditText editText = ((EditText) searchView.findViewById(androidx.appcompat.R.id.search_src_text));
     editText.setHintTextColor(getResources().getColor(R.color.white));
@@ -229,13 +221,14 @@ public void searchFeature() {
         mAuth = FirebaseAuth.getInstance();
         layout_MainMenu = (FrameLayout) findViewById( R.id.mainmenu);
         fab_button=(CircleImageView) findViewById(R.id.fab);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
 
         FirebaseUser firebaseUser=mAuth.getCurrentUser();
         uid = firebaseUser.getUid();
         Log.i("firebbbname","asada");
         Log.i("firebbbbname",uid);
-        DirectToPrefs(uid);
+        //DirectToPrefs(uid);
 
         getuserdetails(uid);
         constraintLayout=(ConstraintLayout) findViewById(R.id.background_img);

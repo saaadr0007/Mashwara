@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.saad.example.nearbyservices.ui.usr_prof">
 
     <RelativeLayout
@@ -58,7 +59,7 @@
             android:fontFamily="sans-serif"
             android:text="Lahore, Pakistan"
             android:textAllCaps="true"
-            android:textColor="@color/address"
+            android:textColor="@color/white"
             android:textSize="14sp" />
 
         <ImageView
@@ -79,10 +80,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/rellay1"
         android:orientation="horizontal">
-
-
-
-
     </LinearLayout>
 
     <RelativeLayout
@@ -107,7 +104,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Email"
-                    android:textColor="@color/headings"
+                    android:textColor="@color/blk"
                     android:textSize="13sp" />
 
                 <EditText
@@ -137,7 +134,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Age"
-                    android:textColor="@color/headings"
+                    android:textColor="@color/blk"
                     android:textSize="13sp" />
 
                 <EditText
@@ -168,7 +165,7 @@
                     android:layout_height="wrap_content"
                     android:text="Birthday"
 
-                    android:textColor="@color/headings"
+                    android:textColor="@color/blk"
                     android:textSize="13sp" />
 
                 <EditText
@@ -191,6 +188,7 @@
 
             </LinearLayout>
 
+
             <Button
                 android:id="@+id/save"
                 android:layout_width="match_parent"
@@ -200,42 +198,34 @@
                 android:onClick="savechanges"
                 android:layout_margin="@dimen/margin_10"
                 android:drawableTint="@color/solidCircle"
-                android:background="@color/com_facebook_blue"
+                android:background="@color/accent_indago"
                 android:gravity="center"
                 />
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:layout_margin="@dimen/margin_10"
-                android:id="@+id/linlay1"
-                android:background="@color/light_prple"
-                android:gravity="center"
-                >
 
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
                     <Button
-                        android:layout_width="wrap_content"
+                        android:id="@+id/mycircle1"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAllCaps="true"
-
-                        android:background="@color/circleBorder"
+                        android:visibility="gone"
+                        android:background="@color/accent_indago"
+                        android:layout_margin="@dimen/margin_10"
                         android:text="My Circle "
-                        android:textColor="@color/blk"
+                        android:textColor="@color/white"
                        />
 
 
 
                 </LinearLayout>
 
-            </RelativeLayout>
 
 
 
@@ -244,5 +234,15 @@
         </LinearLayout>
 
     </RelativeLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:labelVisibilityMode="labeled"
+        android:background="@color/accent_indago"
+        android:layout_alignParentBottom="true"
+        app:itemIconTint="@color/color_icons"
+        app:itemTextColor="@color/color_icons"
+        app:menu="@menu/navigation_menu" />
 
 </RelativeLayout>

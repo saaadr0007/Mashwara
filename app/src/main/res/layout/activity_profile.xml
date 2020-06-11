@@ -6,4 +6,5 @@
     android:layout_height="match_parent"
     tools:context=".ui.ProfileActivity">
     <include layout="@layout/import_activity_profile"></include>
+
 </RelativeLayout>

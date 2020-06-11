@@ -124,7 +124,6 @@ public class PlaceAboutDetail extends Fragment implements OnMapReadyCallback {
 
         mCurrentPlace = getArguments().getParcelable(GoogleApiUrl.CURRENT_LOCATION_DATA_KEY);
 
-        SearchforDesc(mCurrentPlace.getPlaceId());
         //SearchforFurnDesc(mCurrentPlace.getPlaceId());
 
         rootView.findViewById(R.id.location_phone_container).setOnClickListener(
@@ -183,7 +182,10 @@ public class PlaceAboutDetail extends Fragment implements OnMapReadyCallback {
             mLocationPhoneTextView.setText(mCurrentPlace.getPlacePhoneNumber());
             mLocationWebsiteTextView.setText(mCurrentPlace.getPlaceWebsite());
             mLocationOpeningStatusTextView.setText(mCurrentPlace.getPlaceOpeningHourStatus());
-            description.setText(getDesc);
+            Log.v("seeeid",mCurrentPlace.getPlaceId());
+            String des=SearchforDesc(mCurrentPlace.getPlaceId());
+            description.setText(des);
+
 //            if (description.getText().toString().isEmpty())
 //                description.setText(getDesc);
 //            else
@@ -333,11 +335,13 @@ public class PlaceAboutDetail extends Fragment implements OnMapReadyCallback {
         return rootView;
     }
 
-    private void SearchforDesc(String placeId) {
-        for (int i=0;i<SplashScreenActivity.getDescripion.size() || i<SplashScreenActivity.getDescripionfurn.size();i++)
+    private String SearchforDesc(String placeId) {
+        Log.v("seesize",String.valueOf(SplashScreenActivity.getDescripion.size()));
+        for (int i=0;i<SplashScreenActivity.getDescripion.size();i++)
         {
             if(placeId.equals(SplashScreenActivity.getDescripion.get(i).getKey()))
             {
+                Log.v("found","founf");
                 getDesc=SplashScreenActivity.getDescripion.get(i).getDescripion();
                 break;
             }
@@ -345,8 +349,10 @@ public class PlaceAboutDetail extends Fragment implements OnMapReadyCallback {
             {
                 getDesc=SplashScreenActivity.getDescripionfurn.get(i).getDescripion();
                 break;
+                //31.460421699999998, 74.28515639999999
             }
         }
+        return getDesc;
     }
 
     private void SearchforFurnDesc(String placeId) {

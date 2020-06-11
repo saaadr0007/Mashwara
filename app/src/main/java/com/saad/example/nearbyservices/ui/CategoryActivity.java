@@ -85,32 +85,13 @@ public class CategoryActivity extends AppCompatActivity implements AdapterView.O
                         startActivity(new Intent(CategoryActivity.this, FavouritePlaceListActivity.class));
                         break;
 
-//                    case R.id.share_icon:
-//                        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-//                        shareIntent.setType("text/plain");
-//                        shareIntent.putExtra(Intent.EXTRA_TEXT, "Hey, Checkout AroundMe Application");
-//                        startActivity(Intent.createChooser(shareIntent, "Share App.."));
-//                        break;
-
-//                    case R.id.feedback_icon:
-//                        Intent mailToIntent = new Intent(Intent.ACTION_SEND);
-//                        mailToIntent.setData(Uri.parse("mailto:"));
-//                        mailToIntent.setType("text/plain");
-//                        mailToIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"saadrafique1000@gmail.com"});
-//                        startActivity(Intent.createChooser(mailToIntent, "Send Mail.."));
-//                        mDrawerLayout.closeDrawers();
-//                        break;
-
                     case R.id.pref_icon:
                         startActivity(new Intent(CategoryActivity.this, PreferenceActivity.class));
                         break;
 
-//                case R.id.about_icon:
-//                    Dialog aboutDialog = new Dialog(LandingActivity.this, R.style.AboutDialog);
-//                    aboutDialog.setTitle(getString(R.string.about));
-//                    aboutDialog.setContentView(R.layout.about_dialog);
-//                    aboutDialog.show();
-//                    break;
+                    case R.id.mycircle:
+                        startActivity(new Intent(CategoryActivity.this, MainActivityReq.class));
+                        break;
                 }
                 return false;
             }
@@ -149,12 +130,20 @@ public class CategoryActivity extends AppCompatActivity implements AdapterView.O
 
         return drawableResourceId;
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
         initialisespinner();
         navigation();
+        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         includeedu = (View) findViewById(R.id.include2);
         includerest = (View) findViewById(R.id.include1);
         imgheart = (ImageView) findViewById(R.id.unheartimg);
@@ -169,6 +158,8 @@ public class CategoryActivity extends AppCompatActivity implements AdapterView.O
         setTitle(getString(R.string.preference_place_list_string));
         actionBar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         horizontal_recycler_view = (RecyclerView) findViewById(R.id.horizontal_recycler_view);
         horizontalList = new ArrayList<Arraylist>();
@@ -322,9 +313,6 @@ public class CategoryActivity extends AppCompatActivity implements AdapterView.O
         horizontal_recycler_view.setAdapter(horizontalAdapter);
 
 
-
-        BottomNavigationView navigation = findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
     }
 

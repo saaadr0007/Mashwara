@@ -4,9 +4,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rel"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     tools:context="com.saad.example.nearbyservices.ui.PlaceListActivity">
 
@@ -21,6 +22,8 @@
         android:layout_below="@id/toolbar"
         android:background="@android:color/white"
         android:layout_width="match_parent"
+        android:layout_above="@id/navigation"
+
         android:layout_height="match_parent"
         tools:context="com.saad.example.nearbyservices.ui.PlaceListActivity"/>
 
@@ -29,24 +32,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+
         android:drawableTop="@drawable/ic_cloud_off_black"
         android:gravity="center"
-        android:text="@string/no_near_by_place_found"
+        android:text="@string/no_favadd"
         android:textColor="@android:color/black"
         android:textSize="24sp"
         android:visibility="gone"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:labelVisibilityMode="labeled"
         android:background="@color/accent_indago"
+        android:layout_alignEnd="@id/empty_view"
+
+
+        android:layout_alignParentBottom="true"
         app:itemIconTint="@color/color_icons"
         app:itemTextColor="@color/color_icons"
-        android:layout_above="@id/place_list_recycler_view"
-        android:layout_toEndOf="@id/place_list_recycler_view"
-        />
-
+        app:menu="@menu/navigation_menu" />
 
 </RelativeLayout>
 

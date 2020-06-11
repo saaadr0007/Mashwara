@@ -2,6 +2,7 @@ package com.saad.example.nearbyservices.ui;
 
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 
@@ -15,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +24,7 @@ import java.util.ArrayList;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -36,6 +39,7 @@ import com.saad.example.nearbyservices.data.PlaceDetailContract.PlaceDetailEntry
 import com.saad.example.nearbyservices.model.Place;
 
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 public class  FavouritePlaceListActivity extends AppCompatActivity
 //        implements
@@ -46,10 +50,13 @@ public class  FavouritePlaceListActivity extends AppCompatActivity
     /**
      * ArrayList of the PlaceDetail
      */
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener;
+
     private ArrayList<Place> mFavouritePlaceArrayList = new ArrayList<>();
     private PlaceListAdapter mPlaceListAdapter;
     private RecyclerView mRecyclerView;
     private FirebaseDatabase mFirebaseInstance;
+    private TextView empty_view;
     private DatabaseReference mFirebaseDatabase1;
 
     private GridLayoutManager mGridLayoutManager;
@@ -59,18 +66,70 @@ public class  FavouritePlaceListActivity extends AppCompatActivity
     private FirebaseUser firebaseUser=null;
     private String userid=null;
     private ArrayList<Place> addFavPlace=new ArrayList<>();
+
+    public void navigation() {
+        mOnNavigationItemSelectedListener
+                = new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+
+                    case R.id.home:
+                        startActivity(new Intent(FavouritePlaceListActivity.this, LandingActivity.class));
+                        break;
+
+
+                    case R.id.location_favourite_icon:
+                      //  startActivity(new Intent(FavouritePlaceListActivity.this, FavouritePlaceListActivity.class));
+                        break;
+
+                    case R.id.mycircle:
+                        startActivity(new Intent(FavouritePlaceListActivity.this, MainActivityReq.class));
+
+
+                      //  startActivity(new Intent(FavouritePlaceListActivity.this, FavouritePlaceListActivity.class));
+                        break;
+
+                    case R.id.pref_icon:
+                        startActivity(new Intent(FavouritePlaceListActivity.this,PreferenceActivity.class));
+                        break;
+
+                }
+                return false;
+            }
+        };
+    }
+
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_list);
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mFirebaseDatabase1 = mFirebaseInstance.getReference("Favourites");
+        empty_view=(TextView) findViewById(R.id.empty_view);
+        navigation();
+
+        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
 
         Toolbar actionBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(actionBar);
-        setTitle(getString(R.string.favourite_place_list_string));
+        setTitle(getString(R.string.favs));
         actionBar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
+
 
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -96,13 +155,11 @@ public class  FavouritePlaceListActivity extends AppCompatActivity
                     mRecyclerView.setLayoutManager(mGridLayoutManager);
                     mRecyclerView.setAdapter(mPlaceListAdapter);
                 }
-//
-//
-//                                                                       mFavouritePlaceCursorAdapter = new FavouritePlaceCursorAdapter( getApplicationContext(),addFavPlace);
-//                                                                       mRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 1));
-//                                                                       mRecyclerView.setAdapter(mFavouritePlaceCursorAdapter);
-            }
+                else
+                    empty_view.setVisibility(View.VISIBLE);
 
+
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -112,116 +169,3 @@ public class  FavouritePlaceListActivity extends AppCompatActivity
 
     }
 }
-//
-//        mRecyclerView = (RecyclerView) findViewById(R.id.place_list_recycler_view);
-//        //setup an Adapter to create a list item for each row of the favouritePlace item in the cursor
-//        mFavouritePlaceCursorAdapter = new FavouritePlaceCursorAdapter(this, null);
-//        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 1));
-//        mRecyclerView.setAdapter(mFavouritePlaceCursorAdapter);
-
-        //first time loader is initialize
-        //getLoaderManager().initLoader(FAVOURITE_PLACE_DETAIL_LOADER, null, this);
-
-// public void getfav(S)
-// {
-//     String jsonArrayTag = "jsonArrayTag";
-//     JsonObjectRequest placeJsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-//             locationQueryStringUrl, null,
-//             new com.android.volley.Response.Listener<JSONObject>() {
-//                 @Override
-//                 public void onResponse(JSONObject response) {
-//                     try {
-//                         rootJsonArray = response.getJSONArray("results");
-//                         System.out.println(rootJsonArray.toString());
-//                         Log.i("printjson",rootJsonArray.toString());
-//                         // save(PlaceListOnMapActivity.this,rootJsonArray.toString());
-//                         if (rootJsonArray.length() == 0)
-//                             ((TextView) findViewById(R.id.place_list_placeholder_text_view))
-//                                     .setText(getResources().getString(R.string.no_near_by_tag)
-//                                             + " " + mLocationName + " " + getString(R.string.found));
-//                         else {
-//                             for (int i = 0; i < rootJsonArray.length(); i++) {
-//                                 JSONObject singlePlaceJsonObject = (JSONObject) rootJsonArray.get(i);
-//                                 String currentPlaceId = singlePlaceJsonObject.getString("place_id");
-//                                 getplaceidofnearby.add(currentPlaceId);
-//                                 System.out.println(currentPlaceId);
-//                                 Double currentPlaceLatitude = singlePlaceJsonObject
-//                                         .getJSONObject("geometry").getJSONObject("location")
-//                                         .getDouble("lat");
-//                                 Double currentPlaceLongitude = singlePlaceJsonObject
-//                                         .getJSONObject("geometry").getJSONObject("location")
-//                                         .getDouble("lng");
-//                                 String currentPlaceName = singlePlaceJsonObject.getString("name");
-//                                 String currentPlaceOpeningHourStatus = singlePlaceJsonObject
-//                                         .has("opening_hours") ? singlePlaceJsonObject
-//                                         .getJSONObject("opening_hours")
-//                                         .getString("open_now") : "Status Not Available";
-//                                 Double currentPlaceRating = singlePlaceJsonObject.has("rating") ?
-//                                         singlePlaceJsonObject.getDouble("rating") : 0;
-//                                 String currentPlaceAddress = singlePlaceJsonObject.has("vicinity") ?
-//                                         singlePlaceJsonObject.getString("vicinity") :
-//                                         "Address Not Available";
-//                                 //2  Photo [] photoarr=getphotos(singlePlaceJsonObject);
-//                                 Place singlePlaceDetail = new Place(
-//                                         currentPlaceId,
-//                                         currentPlaceLatitude,
-//                                         currentPlaceLongitude,
-//                                         currentPlaceName,
-//                                         currentPlaceOpeningHourStatus,
-//                                         currentPlaceRating,
-//                                         currentPlaceAddress);
-//                                 mNearByPlaceArrayList.add(singlePlaceDetail);
-//
-//                             }
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case android.R.id.home:
-//                finish();
-//                break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-//
-////    @Override
-////    public android.content.Loader<Cursor> onCreateLoader(int id, Bundle args) {
-////
-////        //define projection for the favouritePlace Details (No of Column)
-////        String[] projection = {
-////                PlaceDetailEntry._ID,
-////                PlaceDetailEntry.COLUMN_PLACE_ID,
-////                PlaceDetailEntry.COLUMN_PLACE_LATITUDE,
-////                PlaceDetailEntry.COLUMN_PLACE_LONGITUDE,
-////                PlaceDetailEntry.COLUMN_PLACE_NAME,
-////                PlaceDetailEntry.COLUMN_PLACE_OPENING_HOUR_STATUS,
-////                PlaceDetailEntry.COLUMN_PLACE_RATING,
-////                PlaceDetailEntry.COLUMN_PLACE_ADDRESS,
-////                PlaceDetailEntry.COLUMN_PLACE_PHONE_NUMBER,
-////                PlaceDetailEntry.COLUMN_PLACE_WEBSITE,
-////                PlaceDetailEntry.COLUMN_PLACE_SHARE_LINK
-////        };
-////
-////        return new CursorLoader(this,
-////                PlaceDetailEntry.CONTENT_URI,
-////                projection,
-////                null,
-////                null,
-////                null);
-////    }
-////
-////    @Override
-////    public void onLoadFinished(android.content.Loader<Cursor> loader, Cursor data) {
-////        //Swap the Cursor for loading new data
-////        ((FavouritePlaceCursorAdapter) mRecyclerView.getAdapter()).swapCursor(data);
-////    }
-////
-////    @Override
-////    public void onLoaderReset(android.content.Loader<Cursor> loader) {
-////        ((FavouritePlaceCursorAdapter) mRecyclerView.getAdapter()).swapCursor(null);
-////    }
-//
-//    @Override
-//    public void onBackPressed() {
-//        super.onBackPressed();
-//    }
-//}

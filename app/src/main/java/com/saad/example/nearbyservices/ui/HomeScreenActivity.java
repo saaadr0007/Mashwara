@@ -65,6 +65,12 @@ public class HomeScreenActivity extends AppCompatActivity {
     private NavigationView mNavigationView;
 
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +79,7 @@ public class HomeScreenActivity extends AppCompatActivity {
 
         Toolbar actionBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(actionBar);
-        setTitle("My Circle");
+        setTitle("All Services");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         actionBar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));

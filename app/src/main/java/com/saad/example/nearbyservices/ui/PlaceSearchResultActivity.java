@@ -24,8 +24,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.saad.example.nearbyservices.R;
 import com.saad.example.nearbyservices.adapter.PlaceListAdapter;
+import com.saad.example.nearbyservices.model.Filter;
 import com.saad.example.nearbyservices.model.Place;
 import com.saad.example.nearbyservices.utils.AppController;
 import com.saad.example.nearbyservices.utils.GoogleApiUrl;
@@ -36,12 +41,17 @@ public class PlaceSearchResultActivity extends AppCompatActivity {
 
     private ArrayList<Place> mNearByPlaceArrayList = new ArrayList<>();
     private ProgressBar mProgressBar;
+    private DatabaseReference databaseReference;
+    private FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_search_result_acitivity);
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        database = FirebaseDatabase.getInstance();
+
+
         mProgressBar.setVisibility(View.VISIBLE);
 
         Toolbar actionBar = (Toolbar) findViewById(R.id.toolbar);
@@ -74,6 +84,16 @@ public class PlaceSearchResultActivity extends AppCompatActivity {
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String locationName = intent.getStringExtra(SearchManager.QUERY);
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            FirebaseUser user = mAuth.getCurrentUser();
+            if (user != null) {
+                String uid = user.getUid();
+                databaseReference = database.getReference().child("Search History").child(uid);
+                Filter f=new Filter(locationName);
+                databaseReference.push().setValue(f);
+
+
+            }
 
             String currentLocation = getSharedPreferences(
                     GoogleApiUrl.CURRENT_LOCATION_SHARED_PREFERENCE_KEY, 0)

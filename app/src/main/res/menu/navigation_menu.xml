@@ -16,19 +16,19 @@
 
 
     <item
+        android:id="@+id/mycircle"
+        android:icon="@drawable/ic_public_white"
+        android:title="MyCircle"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/pref_icon"
-        android:icon="@drawable/ic_message_white"
-        android:title="@string/set_preferences"
+        android:icon="@drawable/ic_spa"
+        android:title="@string/preference_place_list_string"
         app:showAsAction="ifRoom"/>
 
 
-<!--    <item-->
-<!--        android:id="@+id/share_icon"-->
-<!--        android:icon="@drawable/ic_share_white"-->
-<!--        android:title="@string/share"-->
-<!--        app:showAsAction="ifRoom"/>-->
-
-<!--    <item-->
+    <!--    <item-->
 <!--        android:id="@+id/feedback_icon"-->
 <!--        android:icon="@drawable/ic_feedback_white"-->
 <!--        android:title="@string/feedback"-->

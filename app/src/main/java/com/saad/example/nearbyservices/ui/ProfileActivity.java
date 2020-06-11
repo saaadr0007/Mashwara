@@ -5,14 +5,19 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +37,7 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageView mProfileImage;
     private TextView mProfileName,mProfileStatus,mprofileFriendCount;
     private Button mProfileSendReqButton,mProfileDeclineReqButton;
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener;
 
     ProgressDialog mProgressDialog;
     private String mCurrent_state;
@@ -47,9 +53,64 @@ public class ProfileActivity extends AppCompatActivity {
     String user_id;
 
     @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    public void navigation() {
+        mOnNavigationItemSelectedListener
+                = new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+
+                    case R.id.home:
+                        startActivity(new Intent(ProfileActivity.this, LandingActivity.class));
+                        break;
+
+
+                    case R.id.location_favourite_icon:
+                        startActivity(new Intent(ProfileActivity.this, FavouritePlaceListActivity.class));
+                        break;
+
+                    case R.id.mycircle:
+                        startActivity(new Intent(ProfileActivity.this, MainActivityReq.class));
+
+
+                        //  startActivity(new Intent(FavouritePlaceListActivity.this, FavouritePlaceListActivity.class));
+                        break;
+
+                    case R.id.pref_icon:
+                        startActivity(new Intent(ProfileActivity.this,PreferenceActivity.class));
+                        break;
+
+                }
+                return false;
+            }
+        };
+    }
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        navigation();
+
+        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+
+
+        Toolbar actionBar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(actionBar);
+        setTitle(getString(R.string.users));
+        actionBar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
         //---GETTING ID OF USER WHOSE PROFILE IS OPENED----
         user_id = getIntent().getStringExtra("user_id");
